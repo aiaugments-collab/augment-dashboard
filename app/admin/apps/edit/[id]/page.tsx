@@ -49,11 +49,21 @@ interface AppFormData {
   launchInNewTab: boolean;
 }
 
-export default function EditAppPage({ params }: { params: { id: string } }) {
+export default function EditAppPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('basic');
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
   const [formData, setFormData] = useState<AppFormData>({
     name: '',
     slug: '',
@@ -81,9 +91,11 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
 
   // Fetch existing app data
   useEffect(() => {
+    if (!resolvedParams) return;
+    
     const fetchAppData = async () => {
       try {
-        const response = await fetch(`/api/admin/apps/${params.id}`);
+        const response = await fetch(`/api/admin/apps/${resolvedParams.id}`);
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.app) {
@@ -126,14 +138,16 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
     };
 
     fetchAppData();
-  }, [params.id, router]);
+  }, [resolvedParams, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!resolvedParams) return;
+    
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/admin/apps/${params.id}`, {
+      const response = await fetch(`/api/admin/apps/${resolvedParams.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -6,7 +6,7 @@ import { PlanApp } from '@/lib/db/schemas/planApp';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check if user is admin
@@ -22,7 +22,10 @@ export async function DELETE(
 
     await connectDB();
 
-    const planApp = await PlanApp.findByIdAndDelete(params.id);
+    // Resolve params
+    const { id } = await params;
+
+    const planApp = await PlanApp.findByIdAndDelete(id);
     if (!planApp) {
       return NextResponse.json({ error: 'Plan-app relationship not found' }, { status: 404 });
     }

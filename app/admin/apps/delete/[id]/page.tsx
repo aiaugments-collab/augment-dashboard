@@ -15,20 +15,33 @@ interface AppData {
   category?: string;
 }
 
-export default function DeleteAppPage({ params }: { params: { id: string } }) {
+export default function DeleteAppPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [app, setApp] = useState<AppData | null>(null);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
 
   useEffect(() => {
-    fetchApp();
-  }, []);
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (resolvedParams) {
+      fetchApp();
+    }
+  }, [resolvedParams]);
 
   const fetchApp = async () => {
+    if (!resolvedParams) return;
+    
     try {
-      const response = await fetch(`/api/admin/apps/${params.id}`);
+      const response = await fetch(`/api/admin/apps/${resolvedParams.id}`);
       if (response.ok) {
         const data = await response.json();
         setApp(data.app);
@@ -43,13 +56,13 @@ export default function DeleteAppPage({ params }: { params: { id: string } }) {
   };
 
   const handleDelete = async () => {
-    if (!app) return;
+    if (!app || !resolvedParams) return;
     
     setDeleting(true);
     setError('');
 
     try {
-      const response = await fetch(`/api/admin/apps/${params.id}`, {
+      const response = await fetch(`/api/admin/apps/${resolvedParams.id}`, {
         method: 'DELETE'
       });
 

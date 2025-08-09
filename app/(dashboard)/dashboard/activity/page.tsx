@@ -11,8 +11,8 @@ import {
   CheckCircle,
   type LucideIcon,
 } from 'lucide-react';
-import { ActivityType } from '@/lib/db/schema';
 import { getActivityLogs } from '@/lib/db/queries';
+import { ActivityType } from '@/lib/db/schemas';
 
 const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.SIGN_UP]: UserPlus,
@@ -90,7 +90,7 @@ export default async function ActivityPage() {
                 );
 
                 return (
-                  <li key={log.id} className="flex items-center space-x-4">
+                  <li key={log.userName.toString()} className="flex items-center space-x-4">
                     <div className="bg-orange-100 rounded-full p-2">
                       <Icon className="w-5 h-5 text-orange-600" />
                     </div>
