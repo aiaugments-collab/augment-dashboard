@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { seedSubscriptionData } from '@/lib/db/seed-subscriptions';
 
 export async function POST(request: NextRequest) {
   try {
     // Check authentication and admin role
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user || user.role !== 'platform_admin') {
       return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
     }

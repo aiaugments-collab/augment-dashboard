@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth0 } from '@/lib/auth0';
+import { getSession } from '@/lib/auth/session';
 import { generateSecureAppToken } from '@/lib/sso/token-generator';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { connectDB } from '@/lib/db/connection';
 import { SSOToken } from '@/lib/db/schemas/ssoToken';
 import { App } from '@/lib/db/schemas/app';
@@ -11,7 +11,7 @@ import { createHash } from 'crypto';
 export async function POST(request: NextRequest) {
   try {
     // Get Auth0 user session
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'No active session' }, { status: 401 });
     }
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user details from database using Auth0 ID
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -125,12 +125,12 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'No active session' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

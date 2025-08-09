@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { getUser, getTeamForUser } from '@/lib/db/queries';
 import { SWRConfig } from 'swr';
-import {  Auth0Provider } from '@auth0/nextjs-auth0';
-import { UserSyncProvider } from '@/components/auth/user-sync-provider';
+import { FirebaseAuthProvider } from '@/components/auth/firebase-auth-provider';
+import { FirebaseUserSync } from '@/components/auth/firebase-user-sync';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Starter',
@@ -28,8 +28,8 @@ export default function RootLayout({
       className={`bg-white dark:bg-gray-950 text-black dark:text-white ${manrope.className}`}
     >
       <body className="min-h-[100dvh] bg-gray-50">
-        <Auth0Provider>
-          <UserSyncProvider>
+        <FirebaseAuthProvider>
+          <FirebaseUserSync>
             <SWRConfig
               value={{
                 fallback: {
@@ -42,8 +42,8 @@ export default function RootLayout({
             >
               {children}
             </SWRConfig>
-          </UserSyncProvider>
-        </Auth0Provider>
+          </FirebaseUserSync>
+        </FirebaseAuthProvider>
       </body>
     </html>
   );

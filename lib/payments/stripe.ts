@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { redirect } from 'next/navigation';
-import { Team } from '@/lib/db/schemas';
+import { Team, type ITeam } from '@/lib/db/schemas';
 import {
   getTeamByStripeCustomerId,
   getUser,
@@ -15,7 +15,7 @@ export async function createCheckoutSession({
   team,
   priceId
 }: {
-  team: Team | null;
+  team: ITeam | null;
   priceId: string;
 }) {
   const user = await getUser();
@@ -36,7 +36,7 @@ export async function createCheckoutSession({
     success_url: `${process.env.BASE_URL}/api/stripe/checkout?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.BASE_URL}/pricing`,
     customer: team.stripeCustomerId || undefined,
-    client_reference_id: user.id.toString(),
+    client_reference_id: user._id.toString(),
     allow_promotion_codes: true,
     subscription_data: {
       trial_period_days: 14
@@ -46,7 +46,7 @@ export async function createCheckoutSession({
   redirect(session.url!);
 }
 
-export async function createCustomerPortalSession(team: Team) {
+export async function createCustomerPortalSession(team: ITeam) {
   if (!team.stripeCustomerId || !team.stripeProductId) {
     redirect('/pricing');
   }
@@ -130,14 +130,14 @@ export async function handleSubscriptionChange(
 
   if (status === 'active' || status === 'trialing') {
     const plan = subscription.items.data[0]?.plan;
-    await updateTeamSubscription(team.id, {
+    await updateTeamSubscription(team._id.toString(), {
       stripeSubscriptionId: subscriptionId,
       stripeProductId: plan?.product as string,
       planName: (plan?.product as Stripe.Product).name,
       subscriptionStatus: status
     });
   } else if (status === 'canceled' || status === 'unpaid') {
-    await updateTeamSubscription(team.id, {
+    await updateTeamSubscription(team._id.toString()  , {
       stripeSubscriptionId: null,
       stripeProductId: null,
       planName: null,

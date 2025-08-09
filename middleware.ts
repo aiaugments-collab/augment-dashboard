@@ -1,8 +1,31 @@
 import type { NextRequest } from "next/server";
-import { auth0 } from "./lib/auth0";
+import { NextResponse } from "next/server";
+import { getSession } from "@/lib/auth/session";
 
 export async function middleware(request: NextRequest) {
-  return await auth0.middleware(request);
+  // For API routes, just pass through
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    return NextResponse.next();
+  }
+
+  // For public routes, allow access
+  const publicRoutes = ['/login', '/', '/auth', '/landing'];
+  if (publicRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
+
+  // Check for session on protected routes (dashboard, admin, etc.)
+  try {
+    const session = await getSession();
+    if (!session || !session.user) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  } catch (error) {
+    console.error('Middleware auth error:', error);
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {

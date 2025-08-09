@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db/connection';
 import { getUserAppAccess } from '@/lib/access-control/app-access';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
-import { auth0 } from '@/lib/auth0';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
+import { getSession } from '@/lib/auth/session';
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await getSession();
     
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     await connectDB();
 
     // Get user details from database using Auth0 ID
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

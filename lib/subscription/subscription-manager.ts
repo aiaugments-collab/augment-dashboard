@@ -308,7 +308,21 @@ export class SubscriptionManager {
         status: { $in: ['active', 'trialing', 'cancelled'] }
       }).populate('planId').sort({ createdAt: -1 });
 
-      return subscription;
+      if (!subscription) return null;
+
+      // Return plain object
+      return {
+        _id: subscription._id.toString(),
+        userId: subscription.userId,
+        planId: subscription.planId._id.toString(),
+        planName: subscription.planId.name,
+        status: subscription.status,
+        currentPeriodStart: subscription.currentPeriodStart,
+        currentPeriodEnd: subscription.currentPeriodEnd,
+        cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+        createdAt: subscription.createdAt,
+        updatedAt: subscription.updatedAt
+      };
 
     } catch (error) {
       console.error('Get user subscription error:', error);
@@ -363,7 +377,15 @@ export class SubscriptionManager {
         isIncluded: true
       }).populate('appId');
 
-      return planApps.map(pa => pa.appId).filter(Boolean);
+      return planApps.map(pa => ({
+        _id: pa.appId._id.toString(),
+        name: pa.appId.name,
+        slug: pa.appId.slug,
+        description: pa.appId.description,
+        icon: pa.appId.icon,
+        color: pa.appId.color,
+        category: pa.appId.category
+      })).filter(Boolean);
 
     } catch (error) {
       console.error('Get user apps error:', error);

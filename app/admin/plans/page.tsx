@@ -1,7 +1,6 @@
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
-import { connectDB } from '@/lib/db/connection';
-import { SubscriptionPlan, PlanApp, App } from '@/lib/db/schemas';
+import { getSession } from '@/lib/auth/session';
+import { connectDB } from '@/lib/db/mongodb';
+import { SubscriptionPlan, PlanApp, App, User } from '@/lib/db/schemas';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,8 +16,11 @@ import {
 } from 'lucide-react';
 
 export default async function PlansAdminPage() {
-  const session = await auth0.getSession();
-  const user = await getUserByAuth0Id(session!.user.sub);
+  const session = await getSession();
+  if (!session?.user?.id) return null;
+  
+  await connectDB();
+  const user = await User.findById(session.user.id);
   
   await connectDB();
   

@@ -1,6 +1,7 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0';
+import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
+import { FirebaseSignOutButton } from '@/components/auth/firebase-signout-button';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -20,7 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function DashboardHeader() {
-  const { user, isLoading } = useUser();
+  const { firebaseUser, dbUser, loading } = useFirebaseAuth();
 
   return (
     <div className="bg-background border-b border-border">
@@ -102,9 +103,9 @@ export function DashboardHeader() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.picture} alt={user?.name || 'User'} />
+                    <AvatarImage src={firebaseUser?.photoURL || dbUser?.picture} alt={firebaseUser?.displayName || dbUser?.name || 'User'} />
                     <AvatarFallback>
-                      {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                      {firebaseUser?.displayName?.charAt(0) || firebaseUser?.email?.charAt(0) || dbUser?.name?.charAt(0) || 'U'}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -112,12 +113,12 @@ export function DashboardHeader() {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
-                    {user?.name && (
-                      <p className="font-medium">{user.name}</p>
+                    {(firebaseUser?.displayName || dbUser?.name) && (
+                      <p className="font-medium">{firebaseUser?.displayName || dbUser?.name}</p>
                     )}
-                    {user?.email && (
+                    {firebaseUser?.email && (
                       <p className="w-[200px] truncate text-sm text-muted-foreground">
-                        {user.email}
+                        {firebaseUser.email}
                       </p>
                     )}
                   </div>
@@ -137,10 +138,10 @@ export function DashboardHeader() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <a href="/auth/logout">
+                  <FirebaseSignOutButton variant="ghost">
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
-                  </a>
+                  </FirebaseSignOutButton>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

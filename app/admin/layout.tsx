@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 
 export default async function AdminLayout({
   children,
@@ -8,13 +8,13 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   // Check if user is authenticated
-  const session = await auth0.getSession();
+  const session = await getSession();
   if (!session || !session.user) {
     redirect('/login');
-  }
+  }  
 
   // Check if user has platform admin role
-  const user = await getUserByAuth0Id(session.user.sub);
+  const user = await getUserById(session.user.id.toString());
   if (!user || user.role !== 'platform_admin') {
     redirect('/dashboard'); // Redirect non-platform-admins to regular dashboard
   }

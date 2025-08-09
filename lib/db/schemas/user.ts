@@ -4,8 +4,9 @@ export interface IUser extends Document {
   _id: string;
   name?: string;
   email: string;
-  passwordHash?: string; // Optional for Auth0 users
+  passwordHash?: string; // Optional for Auth0/Firebase users
   auth0Id?: string; // Auth0 user ID
+  firebaseUid?: string; // Firebase user ID
   picture?: string; // Profile picture URL
   emailVerified?: boolean;
   role: string;
@@ -37,6 +38,11 @@ const UserSchema = new Schema<IUser>({
     required: false // Not required for Auth0 users
   },
   auth0Id: {
+    type: String,
+    unique: true,
+    sparse: true // Allow null values, but enforce uniqueness when present
+  },
+  firebaseUid: {
     type: String,
     unique: true,
     sparse: true // Allow null values, but enforce uniqueness when present

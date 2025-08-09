@@ -1,14 +1,17 @@
-import { auth0 } from '@/lib/auth0';
+import { getSession } from '@/lib/auth/session';
 import { connectDB } from '@/lib/db/connection';
 import { User } from '@/lib/db/schemas/user';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { redirect } from 'next/navigation';
 
 export default async function MakeAdminPage() {
-  const session = await auth0.getSession();
+  const session = await getSession();
   
   if (!session || !session.user) {
     redirect('/login');
   }
+
+  const user = await getUserById(session.user.id.toString());
 
   await connectDB();
   
@@ -37,7 +40,7 @@ export default async function MakeAdminPage() {
 
   // Make the first user platform admin (for initial setup only)
   await User.findOneAndUpdate(
-    { auth0Id: session.user.sub },
+    { auth0Id: session.user.id.toString() },
     { role: 'platform_admin' },
     { new: true }
   );
@@ -49,7 +52,7 @@ export default async function MakeAdminPage() {
           ✅ Admin Access Granted!
         </h1>
         <p className="text-green-700 mb-4">
-          You ({session.user.email}) have been made an admin.
+          You ({user?.email || 'unknown'}) have been made an admin.
         </p>
         <a 
           href="/admin" 

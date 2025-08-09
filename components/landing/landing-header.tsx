@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CircleIcon, Menu, X, LayoutDashboard, LogOut } from 'lucide-react';
@@ -13,10 +13,11 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
+import { FirebaseSignOutButton } from '@/components/auth/firebase-signout-button';
 
 export function LandingHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, isLoading } = useUser();
+  const { firebaseUser, dbUser, loading } = useFirebaseAuth();
 
   const navigation = [
     { name: 'Features', href: '#features' },
@@ -52,9 +53,9 @@ export function LandingHeader() {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            {isLoading ? (
+            {loading ? (
               <div className="text-sm text-muted-foreground">Loading...</div>
-            ) : user ? (
+            ) : firebaseUser ? (
               <>
                 <Link href="/dashboard">
                   <Button variant="ghost" className="text-sm">
@@ -66,9 +67,9 @@ export function LandingHeader() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={user.picture} alt={user.name || 'User'} />
+                        <AvatarImage src={firebaseUser.photoURL || ''} alt={dbUser?.name || firebaseUser.displayName || 'User'} />
                         <AvatarFallback>
-                          {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
+                          {dbUser?.name?.charAt(0) || firebaseUser.displayName?.charAt(0) || firebaseUser.email?.charAt(0) || 'U'}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
@@ -76,12 +77,12 @@ export function LandingHeader() {
                   <DropdownMenuContent className="w-56" align="end">
                     <div className="flex items-center justify-start gap-2 p-2">
                       <div className="flex flex-col space-y-1 leading-none">
-                        {user.name && (
-                          <p className="font-medium">{user.name}</p>
+                        {(dbUser?.name || firebaseUser.displayName) && (
+                          <p className="font-medium">{dbUser?.name || firebaseUser.displayName}</p>
                         )}
-                        {user.email && (
+                        {(dbUser?.email || firebaseUser.email) && (
                           <p className="w-[200px] truncate text-sm text-muted-foreground">
-                            {user.email}
+                            {dbUser?.email || firebaseUser.email}
                           </p>
                         )}
                       </div>
@@ -95,22 +96,19 @@ export function LandingHeader() {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <a href="/auth/logout">
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
-                      </a>
+                      <FirebaseSignOutButton />
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             ) : (
               <>
-                <Link href="/auth/login">
+                <Link href="/login">
                   <Button variant="ghost" className="text-sm">
                     Sign In
                   </Button>
                 </Link>
-                <Link href="/auth/login">
+                <Link href="/login">
                   <Button className="text-sm">
                     Get Started
                   </Button>
@@ -150,7 +148,7 @@ export function LandingHeader() {
                 </Link>
               ))}
               <div className="px-3 py-2 space-y-2">
-                {user ? (
+                {firebaseUser ? (
                   <>
                     <Link href="/dashboard" className="block">
                       <Button variant="ghost" className="w-full justify-start">
@@ -158,21 +156,16 @@ export function LandingHeader() {
                         Dashboard
                       </Button>
                     </Link>
-                    <a href="/auth/logout" className="block">
-                      <Button variant="outline" className="w-full justify-start">
-                        <LogOut className="h-4 w-4 mr-2" />
-                        Log out
-                      </Button>
-                    </a>
+                    <FirebaseSignOutButton className="w-full justify-start" variant="outline" />
                   </>
                 ) : (
                   <>
-                    <Link href="/auth/login" className="block">
+                    <Link href="/login" className="block">
                       <Button variant="ghost" className="w-full justify-start">
                         Sign In
                       </Button>
                     </Link>
-                    <Link href="/auth/login" className="block">
+                    <Link href="/login" className="block">
                       <Button className="w-full">
                         Get Started
                       </Button>

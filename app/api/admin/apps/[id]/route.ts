@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { connectDB } from '@/lib/db/connection';
 import { App } from '@/lib/db/schemas/app';
 import { PlanApp } from '@/lib/db/schemas/planApp';
@@ -11,12 +11,12 @@ export async function DELETE(
 ) {
   try {
     // Check if user is admin
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user || user.role !== 'platform_admin') {
       return NextResponse.json({ error: 'Platform admin access required' }, { status: 403 });
     }
@@ -57,12 +57,12 @@ export async function GET(
 ) {
   try {
     // Check if user is admin
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user || user.role !== 'platform_admin') {
       return NextResponse.json({ error: 'Platform admin access required' }, { status: 403 });
     }
@@ -95,12 +95,12 @@ export async function PUT(
 ) {
   try {
     // Check if user is admin
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user || user.role !== 'platform_admin') {
       return NextResponse.json({ error: 'Platform admin access required' }, { status: 403 });
     }

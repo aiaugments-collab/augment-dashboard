@@ -1,12 +1,12 @@
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { connectDB } from '@/lib/db/connection';
 import { User } from '@/lib/db/schemas/user';
 import { SSOToken } from '@/lib/db/schemas/ssoToken';
 
 export default async function AdminDashboard() {
-  const session = await auth0.getSession();
-  const user = await getUserByAuth0Id(session!.user.sub);
+  const session = await getSession();
+  const user = await getUserById(session!.user.id.toString());
   
   // Get some basic stats
   await connectDB();

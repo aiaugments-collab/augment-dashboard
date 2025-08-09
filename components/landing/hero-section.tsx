@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, PlayCircle } from 'lucide-react';
+import Link from 'next/link';
 
 export function HeroSection() {
   return (
@@ -18,11 +19,14 @@ export function HeroSection() {
             </p>
             <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex flex-col sm:flex-row gap-4">
               <Button
+                asChild
                 size="lg"
                 className="text-lg rounded-full px-8 py-6 h-auto"
               >
-                Start for Free
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <Link href="/login">
+                  Start for Free
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
               <Button
                 size="lg"

@@ -39,14 +39,38 @@ export async function getUser() {
     deletedAt: { $exists: false }
   });
 
-  return user;
+  if (!user) return null;
+
+  // Return plain object to avoid serialization issues
+  return {
+    _id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    plan: user.plan,
+    subscription: user.subscription,
+    auth0Id: user.auth0Id,
+    firebaseUid: user.firebaseUid,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  };
 }
 
 export async function getTeamByStripeCustomerId(customerId: string) {
   await connectDB();
   
   const team = await Team.findOne({ stripeCustomerId: customerId });
-  return team;
+  if (!team) return null;
+  
+  return {
+    _id: team._id.toString(),
+    name: team.name,
+    stripeCustomerId: team.stripeCustomerId,
+    stripeProductId: team.stripeProductId,
+    plan: team.plan,
+    createdAt: team.createdAt,
+    updatedAt: team.updatedAt
+  };
 }
 
 export async function updateTeamSubscription(

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { connectDB } from '@/lib/db/connection';
 import { UserErpNextSite } from '@/lib/db/schemas/userErpNextSite';
 import { generateUniqueUsername, generateSiteUrl } from '@/lib/utils/username-generator';
@@ -9,12 +9,12 @@ import { createCustomerSite, checkSiteExists, deleteCustomerSite } from '@/lib/u
 export async function POST(request: NextRequest) {
   try {
     // Check if user is authenticated
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -191,12 +191,12 @@ export async function POST(request: NextRequest) {
 // Get user's ERPNext site status
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth0 } from '@/lib/auth0';
-import { getUserByAuth0Id } from '@/lib/auth/user-sync';
+import { getSession } from '@/lib/auth/session';
+import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { connectDB } from '@/lib/db/connection';
 import { UserErpNextSite } from '@/lib/db/schemas/userErpNextSite';
 import { deleteCustomerSite } from '@/lib/utils/erpnext-api';
@@ -8,12 +8,12 @@ import { deleteCustomerSite } from '@/lib/utils/erpnext-api';
 export async function DELETE(request: NextRequest) {
   try {
     // Check if user is authenticated
-    const session = await auth0.getSession();
+    const session = await getSession();
     if (!session || !session.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const user = await getUserByAuth0Id(session.user.sub);
+    const user = await getUserById(session.user.id.toString());
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

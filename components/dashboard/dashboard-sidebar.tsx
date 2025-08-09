@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -46,7 +46,7 @@ import { Card } from '@/components/ui/card';
 
 export function DashboardSidebar() {
   const [expandedSections, setExpandedSections] = useState<string[]>(['favorites', 'ai-agents']);
-  const { user } = useUser();
+  const { firebaseUser, dbUser } = useFirebaseAuth();
   const pathname = usePathname();
 
   const toggleSection = (sectionId: string) => {
@@ -159,9 +159,9 @@ export function DashboardSidebar() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="p-1">
                 <Avatar className="h-7 w-7">
-                  <AvatarImage src={user?.picture} alt={user?.name || 'User'} />
+                  <AvatarImage src={firebaseUser?.photoURL || dbUser?.picture} alt={firebaseUser?.displayName || dbUser?.name || 'User'} />
                   <AvatarFallback className="text-xs">
-                    {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                    {firebaseUser?.displayName?.charAt(0) || firebaseUser?.email?.charAt(0) || dbUser?.name?.charAt(0) || 'U'}
                   </AvatarFallback>
                 </Avatar>
               </Button>

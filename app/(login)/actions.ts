@@ -202,7 +202,9 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 });
 
 export async function signOut() {
-  const user = (await getUser()) as IUser;
+  const user = await getUser();
+  if (!user) return;
+  
   const userWithTeam = await getUserWithTeam(user._id.toString());
   await logActivity(userWithTeam?.teamId, user._id.toString(), ActivityType.SIGN_OUT);
   (await cookies()).delete('session');
@@ -218,6 +220,15 @@ export const updatePassword = validatedActionWithUser(
   updatePasswordSchema,
   async (data, _, user) => {
     const { currentPassword, newPassword, confirmPassword } = data;
+
+    if (!user.passwordHash) {
+      return {
+        error: 'Password not set for this account.',
+        currentPassword,
+        newPassword,
+        confirmPassword
+      };
+    }
 
     const isPasswordValid = await comparePasswords(
       currentPassword,
@@ -275,6 +286,13 @@ export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
   async (data, _, user) => {
     const { password } = data;
+
+    if (!user.passwordHash) {
+      return {
+        error: 'Password not set for this account.',
+        password
+      };
+    }
 
     const isPasswordValid = await comparePasswords(password, user.passwordHash);
     if (!isPasswordValid) {

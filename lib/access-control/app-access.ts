@@ -139,7 +139,7 @@ export async function getUserAppAccess(userId: string): Promise<{
     let subscription: UserAccessInfo['subscription'] | null = null;
     if (userSubscription) {
       subscription = {
-        planId: userSubscription.planId._id,
+        planId: userSubscription.planId._id.toString(),
         planLevel: userSubscription.planId.position || 0,
         status: userSubscription.status,
         expiresAt: userSubscription.expiresAt
@@ -157,7 +157,19 @@ export async function getUserAppAccess(userId: string): Promise<{
     // If no subscription, only show free apps
     if (!subscription) {
       const appsWithAccess = apps.map(app => ({
-        ...app.toObject(),
+        _id: app._id.toString(),
+        name: app.name,
+        slug: app.slug,
+        description: app.description,
+        icon: app.icon,
+        color: app.color,
+        category: app.category,
+        isPopular: app.isPopular,
+        isFeatured: app.isFeatured,
+        popularity: app.popularity,
+        requiresPlan: app.requiresPlan,
+        minimumPlanLevel: app.minimumPlanLevel,
+        status: app.status,
         hasAccess: !app.requiresPlan,
         accessReason: app.requiresPlan ? 'upgrade_required' : 'free',
         userPlanLevel: 0,
@@ -195,7 +207,19 @@ export async function getUserAppAccess(userId: string): Promise<{
       }
 
       return {
-        ...app.toObject(),
+        _id: app._id.toString(),
+        name: app.name,
+        slug: app.slug,
+        description: app.description,
+        icon: app.icon,
+        color: app.color,
+        category: app.category,
+        isPopular: app.isPopular,
+        isFeatured: app.isFeatured,
+        popularity: app.popularity,
+        requiresPlan: app.requiresPlan,
+        minimumPlanLevel: app.minimumPlanLevel,
+        status: app.status,
         hasAccess,
         accessReason,
         requiredPlanLevel: app.minimumPlanLevel,

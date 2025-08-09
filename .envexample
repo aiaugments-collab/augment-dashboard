@@ -1,0 +1,26 @@
+# Database
+MONGODB_URI='mongodb+srv://aiaugments:aiaugments111@cluster0.hccytxc.mongodb.net/'
+
+# Authentication
+AUTH_SECRET='af2985e9c35778189c7daa761f2d7048dd4e91fd98c35fb99fce7dc62358c772'
+
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCmN7HdZYGoAXBcPJG1ZZAvD-yIcXVRXXE
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=aiaugments-fbc8a.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=aiaugments-fbc8a
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=aiaugments-fbc8a.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=593619492192
+NEXT_PUBLIC_FIREBASE_APP_ID=1:593619492192:web:b8d19ad6827f3b96bb9205
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-YG7JZ67RH4
+
+# SSO (for existing SSO integration)
+SSO_JWT_SECRET="45ebba4385dba30e7c60a589f780b6b19b1bf89dc04091fc138410282791114f"
+PLATFORM_URL=http://localhost:3000
+
+# Stripe Configuration
+STRIPE_SECRET_KEY=sk_test_***
+STRIPE_WEBHOOK_SECRET=whsec_***
+USE_MOCK_STRIPE=true
+
+# App Configuration
+BASE_URL=http://localhost:3000
