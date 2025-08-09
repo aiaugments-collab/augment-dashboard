@@ -22,19 +22,46 @@ export async function GET(request: NextRequest) {
     const plansWithApps = plans.map(plan => {
       const includedApps = planApps
         .filter(pa => pa.planId.toString() === (plan._id as string).toString() && pa.isIncluded)
-        .map(pa => pa.appId)
+        .map(pa => pa.appId ? {
+          _id: pa.appId._id.toString(),
+          name: pa.appId.name,
+          slug: pa.appId.slug,
+          description: pa.appId.description,
+          icon: pa.appId.icon,
+          color: pa.appId.color,
+          category: pa.appId.category
+        } : null)
         .filter(Boolean);
 
       return {
-        ...plan,
+        _id: (plan._id as any).toString(),
+        name: plan.name,
+        description: plan.description,
+        price: plan.price,
+        position: plan.position,
+        features: plan.features,
+        isActive: plan.isActive,
+        stripePriceId: plan.stripePriceId,
         includedApps,
         appCount: includedApps.length
       };
     });
 
+    // Serialize allApps too
+    const serializedApps = allApps.map(app => ({
+      _id: (app._id as any).toString(),
+      name: app.name,
+      slug: app.slug,
+      description: app.description,
+      icon: app.icon,
+      color: app.color,
+      category: app.category,
+      status: app.status
+    }));
+
     return NextResponse.json({
       plans: plansWithApps,
-      allApps,
+      allApps: serializedApps,
       totalPlans: plans.length
     });
 

@@ -49,7 +49,7 @@ export function validatedActionWithUser<S extends z.ZodType<any, any>, T>(
       return { error: result.error.errors[0].message };
     }
 
-    return action(result.data, formData, user);
+    return action(result.data, formData, user as any);
   };
 }
 
@@ -62,7 +62,7 @@ export function withTeam<T>(action: ActionWithTeamFunction<T>) {
   return async (formData: FormData): Promise<T> => {
     const user = await getUser();
     if (!user) {
-      redirect('/sign-in');
+      redirect('/login');
     }
 
     const team = await getTeamForUser();

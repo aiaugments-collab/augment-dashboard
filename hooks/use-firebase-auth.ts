@@ -12,8 +12,18 @@ export function useFirebaseAuth() {
     user ? '/api/user' : null,
     async (url) => {
       const response = await fetch(url);
-      if (!response.ok) throw new Error('Failed to fetch user');
+      if (!response.ok) {
+        // Don't throw error for unauthorized users on public pages
+        if (response.status === 401) return null;
+        throw new Error('Failed to fetch user');
+      }
       return response.json();
+    },
+    {
+      // Add timeout and error handling
+      errorRetryCount: 1,
+      shouldRetryOnError: false,
+      revalidateOnFocus: false
     }
   );
 
@@ -30,7 +40,7 @@ export function useFirebaseAuth() {
   return {
     firebaseUser: user,
     dbUser,
-    loading: loading || (!user && !error),
+    loading,
     error,
     signOut,
     mutate
