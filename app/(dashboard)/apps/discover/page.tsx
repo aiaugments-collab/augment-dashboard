@@ -20,7 +20,23 @@ import {
   ArrowUpCircle,
   Clock,
   Lock,
-  Globe
+  Globe,
+  Users,
+  FileSignature,
+  Zap,
+  MessageSquare,
+  Share2,
+  Calendar,
+  CreditCard,
+  Mail,
+  Phone,
+  FileText,
+  BarChart3,
+  ShoppingCart,
+  Database,
+  Code2,
+  Shield,
+  Briefcase
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -79,7 +95,7 @@ export default function AppDiscoveryPage() {
 
   const fetchAppCatalog = async () => {
     try {
-      const response = await fetch('/api/apps/catalog');
+      const response = await fetch('/api/apps/registry');
       if (response.ok) {
         const data = await response.json();
         setApps(data.apps || []);
@@ -160,8 +176,34 @@ export default function AppDiscoveryPage() {
     }
   };
 
+  // Map app icons to lucide icons
+  const getAppIcon = (iconName?: string) => {
+    const iconMap: { [key: string]: any } = {
+      'TrendingUp': TrendingUp,
+      'Users': Users,
+      'FileSignature': FileSignature,
+      'Zap': Zap,
+      'MessageSquare': MessageSquare,
+      'Share2': Share2,
+      'Calendar': Calendar,
+      'Building2': Building2,
+      'CreditCard': CreditCard,
+      'Mail': Mail,
+      'Phone': Phone,
+      'FileText': FileText,
+      'BarChart3': BarChart3,
+      'ShoppingCart': ShoppingCart,
+      'Database': Database,
+      'Code2': Code2,
+      'Shield': Shield,
+      'Globe': Globe,
+      'Briefcase': Briefcase
+    };
+    return iconMap[iconName || 'Building2'] || Building2;
+  };
+
   const AppCard = ({ app }: { app: CatalogApp }) => {
-    const IconComponent = Building2;
+    const IconComponent = getAppIcon(app.icon);
     
     if (viewMode === 'list') {
       return (
@@ -231,21 +273,12 @@ export default function AppDiscoveryPage() {
             </div>
             
             <div className="flex flex-col items-end space-y-2 ml-4">
-              {app.hasAccess ? (
-                <Button size="sm" asChild>
-                  <a href={`/sso/${app.slug}`} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Open App
-                  </a>
-                </Button>
-              ) : (
-                <Link href="/pricing">
-                  <Button variant="outline" size="sm" className="border-orange-200 text-orange-700 hover:bg-orange-50">
-                    <ArrowUpCircle className="mr-2 h-4 w-4" />
-                    Upgrade to Access
-                  </Button>
+              <Button size="sm" asChild>
+                <Link href={`/app/${app.slug}`}>
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  View App Details
                 </Link>
-              )}
+              </Button>
               
               {/* External Links */}
               <div className="flex space-x-2">

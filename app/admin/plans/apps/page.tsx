@@ -57,8 +57,8 @@ export default function PlanAppsPage() {
       const plansResponse = await fetch('/api/admin/plans');
       const plansData = await plansResponse.json();
       
-      // Fetch apps
-      const appsResponse = await fetch('/api/admin/apps');
+      // Fetch apps from registry
+      const appsResponse = await fetch('/api/admin/apps/registry');
       const appsData = await appsResponse.json();
       
       // Fetch plan-app relationships

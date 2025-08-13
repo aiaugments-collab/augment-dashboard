@@ -25,7 +25,9 @@ import {
   MoreHorizontal,
   Play,
   Pause,
-  ExternalLink
+  ExternalLink,
+  FileSignature,
+  Share2
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -61,7 +63,7 @@ export function AppGrid({ viewMode }: AppGridProps) {
 
   const fetchApps = async () => {
     try {
-      const response = await fetch('/api/admin/apps');
+      const response = await fetch('/api/apps/registry');
       if (response.ok) {
         const data = await response.json();
         setApps(data.apps || []);
@@ -103,8 +105,34 @@ export function AppGrid({ viewMode }: AppGridProps) {
     { id: 'active', name: 'Active', count: displayApps.filter(app => app.status === 'active').length }
   ];
 
+  // Map app icons to lucide icons
+  const getAppIcon = (iconName?: string) => {
+    const iconMap: { [key: string]: any } = {
+      'TrendingUp': TrendingUp,
+      'Users': Users,
+      'FileSignature': FileSignature,
+      'Zap': Zap,
+      'MessageSquare': MessageSquare,
+      'Share2': Share2,
+      'Calendar': Calendar,
+      'Building2': Building2,
+      'CreditCard': CreditCard,
+      'Mail': Mail,
+      'Phone': Phone,
+      'FileText': FileText,
+      'BarChart3': BarChart3,
+      'ShoppingCart': ShoppingCart,
+      'Database': Database,
+      'Code2': Code2,
+      'Shield': Shield,
+      'Globe': Globe,
+      'Briefcase': Briefcase
+    };
+    return iconMap[iconName || 'Building2'] || Building2;
+  };
+
   const AppCard = ({ app }: { app: typeof displayApps[0] }) => {
-    const IconComponent = Building2; // Default icon
+    const IconComponent = getAppIcon(app.icon);
     
     const handleOpenApp = async () => {
       if (app.status !== 'active') {

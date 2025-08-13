@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
 import { Button } from '@/components/ui/button';
@@ -39,15 +39,37 @@ import {
   CircleIcon,
   LogOut,
   Bell,
-  HelpCircle
+  HelpCircle,
+  FileSignature,
+  Zap,
+  Share2
 } from 'lucide-react';
 import { SubscriptionWidget } from './subscription-widget';
 import { Card } from '@/components/ui/card';
 
 export function DashboardSidebar() {
   const [expandedSections, setExpandedSections] = useState<string[]>(['favorites', 'ai-agents']);
+  const [apps, setApps] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const { firebaseUser, dbUser } = useFirebaseAuth();
   const pathname = usePathname();
+
+  useEffect(() => {
+    fetchApps();
+  }, []);
+
+  const fetchApps = async () => {
+    try {
+      const response = await fetch('/api/apps/registry');
+      if (response.ok) {
+        const data = await response.json();
+        setApps(data.apps || []);
+      }
+    } catch (error) {
+      console.error('Error fetching apps:', error);
+    }
+    setLoading(false);
+  };
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => 
@@ -55,6 +77,32 @@ export function DashboardSidebar() {
         ? prev.filter(id => id !== sectionId)
         : [...prev, sectionId]
     );
+  };
+
+  // Map app icons to lucide icons
+  const getAppIcon = (iconName?: string) => {
+    const iconMap: { [key: string]: any } = {
+      'TrendingUp': TrendingUp,
+      'Users': Users,
+      'FileSignature': FileSignature,
+      'Zap': Zap,
+      'MessageSquare': MessageSquare,
+      'Share2': Share2,
+      'Calendar': Calendar,
+      'Building2': Building2,
+      'CreditCard': CreditCard,
+      'Mail': Mail,
+      'Phone': Phone,
+      'FileText': FileText,
+      'BarChart3': BarChart3,
+      'ShoppingCart': ShoppingCart,
+      'Database': Database,
+      'Code2': Code2,
+      'Shield': Shield,
+      'Globe': Globe,
+      'Briefcase': Briefcase
+    };
+    return iconMap[iconName || 'Building2'] || Building2;
   };
 
   type NavigationItem = {
@@ -72,6 +120,29 @@ export function DashboardSidebar() {
     items: NavigationItem[];
   };
 
+  // Get featured/popular apps for favorites section
+  const featuredApps = apps
+    .filter(app => app.isFeatured || app.isPopular)
+    .slice(0, 6)
+    .map(app => ({
+      name: app.name,
+      icon: getAppIcon(app.icon),
+      href: `/app/${app.slug}`,
+      badge: app.hasAccess ? undefined : 'Pro',
+      status: app.hasAccess ? 'active' : 'locked'
+    }));
+
+  // Get all accessible apps for quick access
+  const accessibleApps = apps
+    .filter(app => app.hasAccess && app.status === 'active')
+    .slice(0, 8)
+    .map(app => ({
+      name: app.name,
+      icon: getAppIcon(app.icon),
+      href: `/app/${app.slug}`,
+      status: 'active'
+    }));
+
   const navigationSections: NavigationSection[] = [
     {
       id: 'main',
@@ -84,17 +155,12 @@ export function DashboardSidebar() {
         { name: 'Settings', icon: Settings, href: '/dashboard/settings' }
       ]
     },
-    {
+    ...(featuredApps.length > 0 ? [{
       id: 'favorites',
-      title: 'Favorites',
+      title: 'Featured Apps',
       expandable: true,
-      items: [
-        { name: 'CRM & Sales', icon: TrendingUp, href: '/crm', badge: '5' },
-        { name: 'Finance', icon: CreditCard, href: '/finance', badge: 'AI' },
-        { name: 'Email Marketing', icon: Mail, href: '/email', badge: 'AI' },
-        { name: 'Customer Support', icon: MessageSquare, href: '/support', badge: 'AI' }
-      ]
-    },
+      items: featuredApps
+    }] : []),
     {
       id: 'ai-agents',
       title: 'AI Agents',
@@ -108,41 +174,12 @@ export function DashboardSidebar() {
         { name: 'HR AI', icon: Bot, href: '/ai/hr', status: 'paused' }
       ]
     },
-    {
-      id: 'business',
-      title: 'Business Modules',
+    ...(accessibleApps.length > 0 ? [{
+      id: 'quick-access',
+      title: 'Quick Access',
       expandable: true,
-      items: [
-        { name: 'Sales & CRM', icon: TrendingUp, href: '/modules/sales' },
-        { name: 'Marketing', icon: Globe, href: '/modules/marketing' },
-        { name: 'Finance & Accounting', icon: CreditCard, href: '/modules/finance' },
-        { name: 'HR & Recruitment', icon: Users, href: '/modules/hr' },
-        { name: 'Customer Support', icon: MessageSquare, href: '/modules/support' },
-        { name: 'Project Management', icon: Briefcase, href: '/modules/projects' },
-        { name: 'E-commerce', icon: ShoppingCart, href: '/modules/ecommerce' },
-        { name: 'Communication', icon: Phone, href: '/modules/communication' }
-      ]
-    },
-    {
-      id: 'productivity',
-      title: 'Productivity',
-      expandable: true,
-      items: [
-        { name: 'Calendar', icon: Calendar, href: '/productivity/calendar' },
-        { name: 'Documents', icon: FileText, href: '/productivity/documents' },
-        { name: 'File Storage', icon: Database, href: '/productivity/storage' }
-      ]
-    },
-    {
-      id: 'developer',
-      title: 'Developer Tools',
-      expandable: true,
-      items: [
-        { name: 'API Management', icon: Code2, href: '/developer/api' },
-        { name: 'Integrations', icon: Globe, href: '/developer/integrations' },
-        { name: 'Security', icon: Shield, href: '/developer/security' }
-      ]
-    }
+      items: accessibleApps
+    }] : [])
   ];
 
   return (
@@ -189,7 +226,28 @@ export function DashboardSidebar() {
 
       {/* Navigation */}
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
-        {navigationSections.map((section) => (
+        {loading ? (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
+              <div className="space-y-1">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-8 w-full bg-gray-200 rounded animate-pulse" />
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+              <div className="space-y-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-8 w-full bg-gray-200 rounded animate-pulse" />
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {navigationSections.map((section) => (
           <div key={section.id}>
             {section.expandable ? (
               <div>
@@ -271,12 +329,14 @@ export function DashboardSidebar() {
               </div>
             )}
           </div>
-        ))}
+            ))}
+          </>
+        )}
+      </div>
         
-        {/* Subscription Widget */}
-        <div className="p-4 border-t mt-auto">
-          <SubscriptionWidget />
-        </div>
+      {/* Subscription Widget */}
+      <div className="p-4 border-t mt-auto">
+        <SubscriptionWidget />
       </div>
     </div>
   );

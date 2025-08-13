@@ -36,7 +36,9 @@ import {
   Star,
   Clock,
   CheckCircle,
-  ArrowUpCircle
+  ArrowUpCircle,
+  FileSignature,
+  Share2
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -109,7 +111,7 @@ export function EnhancedAppGrid({ viewMode, filterBy = 'all', searchQuery = '' }
 
   const fetchAppCatalog = async () => {
     try {
-      const response = await fetch('/api/apps/catalog');
+      const response = await fetch('/api/apps/registry');
       if (response.ok) {
         const data = await response.json();
         setApps(data.apps || []);
@@ -195,44 +197,43 @@ export function EnhancedAppGrid({ viewMode, filterBy = 'all', searchQuery = '' }
     }
   };
 
+  // Map app icons to lucide icons
+  const getAppIcon = (iconName?: string) => {
+    const iconMap: { [key: string]: any } = {
+      'TrendingUp': TrendingUp,
+      'Users': Users,
+      'FileSignature': FileSignature,
+      'Zap': Zap,
+      'MessageSquare': MessageSquare,
+      'Share2': Share2,
+      'Calendar': Calendar,
+      'Building2': Building2,
+      'CreditCard': CreditCard,
+      'Mail': Mail,
+      'Phone': Phone,
+      'FileText': FileText,
+      'BarChart3': BarChart3,
+      'ShoppingCart': ShoppingCart,
+      'Database': Database,
+      'Code2': Code2,
+      'Shield': Shield,
+      'Globe': Globe,
+      'Briefcase': Briefcase
+    };
+    return iconMap[iconName || 'Building2'] || Building2;
+  };
+
   const AppCard = ({ app }: { app: CatalogApp }) => {
-    const IconComponent = Building2; // Default icon - in real app, map icon names to components
+    const IconComponent = getAppIcon(app.icon);
     
     const handleOpenApp = async () => {
-      if (!app.hasAccess) {
-        // Redirect to upgrade page
-        window.location.href = '/pricing';
-        return;
-      }
-      
       if (app.status !== 'active') {
         alert('This app is currently unavailable. Please try again later.');
         return;
       }
       
-      // Special handling for ERPNext
-      if (app.slug === 'erpnext-business-suite') {
-        clearErpNextError();
-        
-        // Check if user already has an ERPNext site
-        const existingSite = await checkExistingSite();
-        if (existingSite && existingSite.status === 'active') {
-          // User already has a site, open it
-          openSite(existingSite.siteUrl);
-          return;
-        } else if (existingSite && existingSite.status === 'creating') {
-          alert('Your business platform is still being created. Please check your email for updates.');
-          return;
-        }
-        
-        // User doesn't have a site, show password dialog
-        setShowPasswordDialog(true);
-        return;
-      }
-      
-      // Regular app handling
-      clearError();
-      await generateTokenAndRedirect(app.slug);
+      // Navigate to app landing page
+      window.location.href = `/app/${app.slug}`;
     };
     
     if (viewMode === 'list') {

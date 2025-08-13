@@ -29,23 +29,14 @@ export default function AppsPage() {
   const searchParams = useSearchParams();
   const [apps, setApps] = useState<AppData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [seeding, setSeeding] = useState(false);
-  const [seedMessage, setSeedMessage] = useState('');
 
   useEffect(() => {
     fetchApps();
-    
-    // Check if redirected from delete page
-    if (searchParams.get('deleted') === 'true') {
-      setSeedMessage('✅ App deleted successfully!');
-      // Clear message after 3 seconds
-      setTimeout(() => setSeedMessage(''), 3000);
-    }
-  }, [searchParams]);
+  }, []);
 
   const fetchApps = async () => {
     try {
-      const response = await fetch('/api/admin/apps');
+      const response = await fetch('/api/admin/apps/registry');
       if (response.ok) {
         const data = await response.json();
         setApps(data.apps || []);
@@ -56,33 +47,7 @@ export default function AppsPage() {
     setLoading(false);
   };
 
-  const handleSeedErpNext = async () => {
-    setSeeding(true);
-    setSeedMessage('');
-    
-    try {
-      const response = await fetch('/api/admin/seed-erpnext', {
-        method: 'POST'
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setSeedMessage(data.isNewApp ? '✅ ERPNext app seeded successfully!' : '✅ ERPNext app already exists');
-        // Refresh the apps list
-        await fetchApps();
-      } else {
-        setSeedMessage('❌ Failed to seed ERPNext app');
-      }
-    } catch (error) {
-      console.error('Error seeding ERPNext:', error);
-      setSeedMessage('❌ Error seeding ERPNext app');
-    }
-    
-    setSeeding(false);
-    // Clear message after 3 seconds
-    setTimeout(() => setSeedMessage(''), 3000);
-  };
+
 
   if (loading) {
     return (
@@ -96,54 +61,39 @@ export default function AppsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Manage Apps</h2>
-          <p className="text-gray-600">Add and manage applications for SSO</p>
+          <h2 className="text-2xl font-bold text-gray-900">App Registry</h2>
+          <p className="text-gray-600">View code-managed applications and their configurations</p>
+          <div className="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 border border-blue-200">
+            <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+            Registry-managed apps
+          </div>
         </div>
         <div className="flex space-x-3">
-          <button
-            onClick={handleSeedErpNext}
-            disabled={seeding}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {seeding ? 'Seeding...' : 'Seed ERPNext App'}
-          </button>
           <Link 
             href="/admin/plans/apps" 
             className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
-            Manage Plan Apps
+            Manage Plan Access
           </Link>
-          <Link 
-            href="/admin/apps/add" 
+          <button 
+            onClick={fetchApps}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            Add New App
-          </Link>
+            Refresh Registry
+          </button>
         </div>
       </div>
 
-      {/* Seed Message */}
-      {seedMessage && (
-        <div className={`p-4 rounded-lg ${
-          seedMessage.includes('✅') 
-            ? 'bg-green-50 text-green-800 border border-green-200' 
-            : 'bg-red-50 text-red-800 border border-red-200'
-        }`}>
-          {seedMessage}
-        </div>
-      )}
+
 
       {/* Apps Table */}
       <div className="bg-white rounded-lg shadow-sm border">
         {apps.length === 0 ? (
           <div className="p-8 text-center">
-            <p className="text-gray-500 mb-4">No apps configured yet</p>
-            <Link 
-              href="/admin/apps/add" 
-              className="text-blue-600 hover:text-blue-700"
-            >
-              Add your first app →
-            </Link>
+            <p className="text-gray-500 mb-4">No apps found in registry</p>
+            <p className="text-sm text-gray-400">
+              Apps are now managed in the codebase. Check the app modules directory.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -155,7 +105,7 @@ export default function AppsPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Access</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Features</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">View</th>
                 </tr> 
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -242,22 +192,19 @@ export default function AppsPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <Link 
-                        href={`/admin/apps/edit/${app._id}`} 
-                        className="text-blue-600 hover:text-blue-700 mr-4"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => {
-                          if (confirm(`Are you sure you want to delete "${app.name}"? This action cannot be undone.`)) {
-                            window.location.href = `/admin/apps/delete/${app._id}`;
-                          }
-                        }}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        Delete
-                      </button>
+                      <div className="flex space-x-3">
+                        <Link 
+                          href={`/app/${app.slug}`} 
+                          className="text-blue-600 hover:text-blue-700"
+                          target="_blank"
+                        >
+                          View App
+                        </Link>
+                        <span className="text-gray-300">|</span>
+                        <span className="text-gray-400 text-xs">
+                          Code-managed
+                        </span>
+                      </div>
                     </td>
                   </tr>
                 ))}
