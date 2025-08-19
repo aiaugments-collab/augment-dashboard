@@ -7,11 +7,6 @@ const nextConfig: NextConfig = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-  },
-  experimental: {
-    ppr: true,
-    clientSegmentCache: true,
-    nodeMiddleware: true
   }
 };
 
