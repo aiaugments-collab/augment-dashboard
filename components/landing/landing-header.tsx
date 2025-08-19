@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
+import { useStackAuth } from '@/hooks/use-stack-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CircleIcon, Menu, X, LayoutDashboard, LogOut } from 'lucide-react';
+import { CircleIcon, Menu, X, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import {
   DropdownMenu,
@@ -13,52 +13,95 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
-import { FirebaseSignOutButton } from '@/components/auth/firebase-signout-button';
+
 
 export function LandingHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { firebaseUser, dbUser, loading } = useFirebaseAuth();
+  const { user, signOut } = useStackAuth();
 
   const navigation = [
-    { name: 'Features', href: '#features' },
-    { name: 'AI Agents', href: '#ai-agents' },
+    { 
+      name: 'Applications', 
+      href: '#applications',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Customer Experience', href: '#cx-apps', description: 'CRM, Sales, Customer Support' },
+        { name: 'Human Capital Management', href: '#hcm-apps', description: 'HR, Recruitment, Payroll' },
+        { name: 'Financial Management', href: '#finance-apps', description: 'Accounting, Billing, Finance' },
+        { name: 'Marketing & Automation', href: '#marketing-apps', description: 'Campaigns, Social Media, Analytics' },
+        { name: 'Operations', href: '#operations-apps', description: 'Project Management, Inventory' }
+      ]
+    },
+    { name: 'Solutions', href: '#solutions' },
     { name: 'Pricing', href: '#pricing' },
-    { name: 'About', href: '#about' }
+    { name: 'Resources', href: '#resources' }
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - Oracle Style */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <CircleIcon className="h-8 w-8 text-primary" />
-              <span className="ml-2 text-xl font-bold text-foreground">AI Platform</span>
+              <div className="w-8 h-8 bg-red-600 rounded-sm flex items-center justify-center">
+                <span className="text-white font-bold text-sm">AI</span>
+              </div>
+              <span className="ml-3 text-xl font-semibold text-gray-900">Business Suite</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Oracle Style */}
+          <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
-              >
-                {item.name}
-              </Link>
+              item.hasDropdown ? (
+                <DropdownMenu key={item.name}>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="text-gray-700 hover:text-red-600 transition-colors text-sm font-medium flex items-center"
+                    >
+                      {item.name}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-80 p-4">
+                    <div className="grid gap-3">
+                      {item.dropdownItems?.map((dropdownItem) => (
+                        <Link
+                          key={dropdownItem.name}
+                          href={dropdownItem.href}
+                          className="flex flex-col space-y-1 rounded-lg p-3 hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="text-sm font-medium text-gray-900">
+                            {dropdownItem.name}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {dropdownItem.description}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-700 hover:text-red-600 transition-colors text-sm font-medium"
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </nav>
 
-          {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            {loading ? (
-              <div className="text-sm text-muted-foreground">Loading...</div>
-            ) : firebaseUser ? (
+          {/* Desktop CTA Buttons - Oracle Style */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {user ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost" className="text-sm">
+                  <Button variant="ghost" className="text-sm text-gray-700 hover:text-red-600">
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     Dashboard
                   </Button>
@@ -67,9 +110,14 @@ export function LandingHeader() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={firebaseUser.photoURL || ''} alt={dbUser?.name || firebaseUser.displayName || 'User'} />
-                        <AvatarFallback>
-                          {dbUser?.name?.charAt(0) || firebaseUser.displayName?.charAt(0) || firebaseUser.email?.charAt(0) || 'U'}
+                        <AvatarImage 
+                          src={user.profileImageUrl || undefined} 
+                          alt={user.displayName || 'User'} 
+                        />
+                        <AvatarFallback className="bg-red-600 text-white">
+                          {user.displayName?.charAt(0)?.toUpperCase() || 
+                           user.primaryEmail?.charAt(0)?.toUpperCase() || 
+                           'U'}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
@@ -77,12 +125,12 @@ export function LandingHeader() {
                   <DropdownMenuContent className="w-56" align="end">
                     <div className="flex items-center justify-start gap-2 p-2">
                       <div className="flex flex-col space-y-1 leading-none">
-                        {(dbUser?.name || firebaseUser.displayName) && (
-                          <p className="font-medium">{dbUser?.name || firebaseUser.displayName}</p>
+                        {user.displayName && (
+                          <p className="font-medium">{user.displayName}</p>
                         )}
-                        {(dbUser?.email || firebaseUser.email) && (
-                          <p className="w-[200px] truncate text-sm text-muted-foreground">
-                            {dbUser?.email || firebaseUser.email}
+                        {user.primaryEmail && (
+                          <p className="w-[200px] truncate text-sm text-gray-500">
+                            {user.primaryEmail}
                           </p>
                         )}
                       </div>
@@ -95,8 +143,9 @@ export function LandingHeader() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <FirebaseSignOutButton />
+                    <DropdownMenuItem onClick={signOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sign Out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -104,12 +153,12 @@ export function LandingHeader() {
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" className="text-sm">
+                  <Button variant="ghost" className="text-sm text-gray-700 hover:text-red-600">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/login">
-                  <Button className="text-sm">
+                  <Button className="text-sm bg-red-600 hover:bg-red-700 text-white">
                     Get Started
                   </Button>
                 </Link>
@@ -148,7 +197,7 @@ export function LandingHeader() {
                 </Link>
               ))}
               <div className="px-3 py-2 space-y-2">
-                {firebaseUser ? (
+                {user ? (
                   <>
                     <Link href="/dashboard" className="block">
                       <Button variant="ghost" className="w-full justify-start">
@@ -156,7 +205,10 @@ export function LandingHeader() {
                         Dashboard
                       </Button>
                     </Link>
-                    <FirebaseSignOutButton className="w-full justify-start" variant="outline" />
+                    <Button onClick={signOut} className="w-full justify-start" variant="outline">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </Button>
                   </>
                 ) : (
                   <>

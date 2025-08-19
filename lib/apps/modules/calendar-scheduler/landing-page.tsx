@@ -2,153 +2,148 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { AppModuleProps } from '../../types';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Calendar, Clock, Users, Globe, 
-  ExternalLink, CheckCircle, Star, ArrowLeft,
-  Smartphone, Zap, BarChart3, Bell
-} from 'lucide-react';
+import CompleteAppLanding from '@/components/landing/complete-app-landing';
 
 export function CalendarSchedulerLandingPage(props: AppModuleProps) {
   const router = useRouter();
 
-  const handleLaunch = () => {
-    router.push('/app/calendar-scheduler/launch');
+  const handleChatWithBot = () => {
+    console.log('Opening chatbot for Calendar Scheduler');
+  };
+
+  const handleRequestDemo = () => {
+    console.log('Requesting demo for Calendar Scheduler');
+  };
+
+  const handleContactSales = () => {
+    console.log('Contacting sales for Calendar Scheduler');
+  };
+
+  const handleTakeTour = () => {
+    console.log('Taking tour for Calendar Scheduler');
+  };
+
+  const handleBrowseTours = () => {
+    console.log('Browsing product tours');
+  };
+
+  const handleReadDatasheet = () => {
+    console.log('Reading Calendar Scheduler datasheet');
+  };
+
+  const heroProps = {
+    title: "AI-Powered Calendar & Scheduling",
+    description: [
+      'Our complete <span class="text-blue-600 font-medium">AI-powered scheduling</span> solution with embedded <span class="text-blue-600 font-medium">artificial intelligence</span> brings consistent processes and a single source of truth across your entire appointment management—from smart booking and calendar integration to automated reminders and time zone support.',
+      'The application helps you improve your scheduling efficiency, increase your booking rates, and manage appointments more intelligently than ever before.'
+    ],
+    videoTitle: "What is the AI Augments Calendar & Scheduling Suite?",
+    videoDuration: "2:20",
+    dashboardColor: {
+      primary: "bg-gradient-to-br from-green-50 via-white to-emerald-50",
+      secondary: "bg-green-100",
+      accent: "bg-emerald-100"
+    },
+    dashboardMetrics: {
+      metric1: { label: "Bookings", color: "bg-green-100" },
+      metric2: { label: "Scheduled", color: "bg-emerald-100" },
+      metric3: { label: "Availability", color: "bg-blue-100" }
+    },
+    centralFigureColor: "bg-gradient-to-b from-green-400 to-green-600",
+    bottomGradient: "bg-gradient-to-r from-green-100 via-emerald-100 to-blue-100",
+    featureShowcases: {
+      feature1: { label: "Smart Booking", color: "bg-gradient-to-br from-green-200 to-green-400" },
+      feature2: { label: "Reminders", color: "bg-gradient-to-br from-emerald-200 to-emerald-400" },
+      feature3: { label: "Calendar Sync", color: "bg-gradient-to-br from-blue-200 to-blue-400" },
+      feature4: { label: "Time Zone Support", color: "bg-gradient-to-br from-teal-200 to-teal-400" }
+    }
+  };
+
+  const benefits = [
+    {
+      title: "Eliminate scheduling conflicts and reduce no-shows by 70%",
+      description: "Prevent double-bookings and reduce missed appointments with intelligent scheduling algorithms and automated reminder systems.",
+      actionText: "Learn about scheduling optimization (PDF)",
+      actionType: 'pdf' as const,
+      onAction: () => console.log('Download scheduling PDF')
+    },
+    {
+      title: "Save 15+ hours per week on calendar management",
+      description: "Automate appointment booking, rescheduling, and calendar coordination to focus on what matters most - your core business activities.",
+      actionText: "See time-saving features demo",
+      actionType: 'tour' as const,
+      onAction: () => console.log('Time-saving demo')
+    }
+  ];
+
+  const customerStory = {
+    title: "SchedulePro increases booking efficiency by 85% with AI-powered automation",
+    description: "Discover how SchedulePro streamlined their appointment management using AI Augments Calendar Scheduler, resulting in 85% more efficient booking processes and 90% customer satisfaction.",
+    actionText: "Read the SchedulePro story",
+    onAction: () => console.log('Read customer story')
+  };
+
+  const featureTabs = [
+    { id: 'smart-booking', title: 'Smart booking system' },
+    { id: 'calendar-integration', title: 'Calendar integration' }
+  ];
+
+  const featureDetails = {
+    'smart-booking': {
+      title: 'Smart booking system',
+      subtitle: 'Intelligent appointment scheduling',
+      description: 'Enable seamless appointment booking with AI-powered availability detection, conflict prevention, and automatic optimization of your schedule.',
+      subsections: [
+        {
+          title: 'Intelligent availability detection',
+          description: 'Automatically detect and offer optimal time slots based on your preferences, buffer times, and existing commitments.'
+        }
+      ],
+      actions: [
+        { text: 'Read Smart Booking guide (PDF)', type: 'link' as const }
+      ],
+      mockupContent: { type: 'dashboard' as const }
+    },
+    'calendar-integration': {
+      title: 'Calendar integration',
+      subtitle: 'Seamless calendar synchronization',
+      description: 'Connect with all major calendar platforms for unified scheduling that prevents conflicts and keeps everyone synchronized.',
+      subsections: [
+        {
+          title: 'Multi-platform synchronization',
+          description: 'Sync with Google Calendar, Outlook, Apple Calendar, and other platforms for real-time availability updates.'
+        }
+      ],
+      actions: [
+        { text: 'Explore integration options', type: 'link' as const }
+      ],
+      mockupContent: { type: 'table' as const }
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-green-100 shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Dashboard
-              </Button>
-            </Link>
-            {props.hasAccess && (
-              <Button onClick={handleLaunch} className="bg-green-600 hover:bg-green-700 text-white">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Launch Scheduler
-              </Button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center space-x-3 mb-6">
-            <div className="p-3 bg-green-600 rounded-2xl">
-              <Calendar className="h-8 w-8 text-white" />
-            </div>
-            <div className="flex space-x-2">
-              <Badge className="bg-green-100 text-green-700">
-                <CheckCircle className="w-3 h-3 mr-1" />
-                Ready
-              </Badge>
-            </div>
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Calendar & Scheduling <span className="text-green-600">Pro</span>
-          </h1>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Streamline appointments and meetings with intelligent scheduling automation. 
-            Let clients book directly while you maintain complete control over your time.
-          </p>
-
-          <div className="flex items-center justify-center space-x-1 mb-8">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-            ))}
-            <span className="ml-2 text-gray-600 font-medium">4.3/5 from 892 professionals</span>
-          </div>
-
-          <Button onClick={handleLaunch} size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
-            <Calendar className="h-5 w-5 mr-2" />
-            Launch Scheduler Pro
-          </Button>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Calendar,
-                title: "Smart Booking",
-                description: "Let clients book appointments directly with automatic calendar integration.",
-                color: "green"
-              },
-              {
-                icon: Bell,
-                title: "Automated Reminders",
-                description: "Reduce no-shows with email and SMS reminders sent automatically.",
-                color: "blue"
-              },
-              {
-                icon: Globe,
-                title: "Multi-Calendar Sync",
-                description: "Integrate with Google, Outlook, and Apple calendars seamlessly.",
-                color: "purple"
-              }
-            ].map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className={`p-3 bg-${feature.color}-100 rounded-lg w-fit mb-4`}>
-                    <feature.icon className={`h-6 w-6 text-${feature.color}-600`} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
-            Ready to Take Control of Your Time?
-          </h2>
-          <Button onClick={handleLaunch} size="lg" className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3">
-            <Calendar className="h-5 w-5 mr-2" />
-            Launch Scheduler Pro
-          </Button>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="text-gray-400">
-              <p>&copy; 2025 Calendar & Scheduling Pro. Part of Augment Dashboard.</p>
-            </div>
-            <div className="flex space-x-6">
-              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white" asChild>
-                <a href="https://github.com/backink/calendar-app" target="_blank" rel="noopener noreferrer">
-                  <Globe className="h-4 w-4 mr-2" />
-                  GitHub
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <CompleteAppLanding
+      appName="Calendar & Scheduling"
+      hero={heroProps}
+      includeGetStarted={true}
+      includeBenefits={true}
+      includeCustomerSuccess={true}
+      includeAdvancedFeatures={true}
+      includeFinalCTA={true}
+      benefits={benefits}
+      customerStory={customerStory}
+      advancedFeaturesTitle="AI Augments Calendar & Scheduling features"
+      advancedFeaturesDescription="Streamline your appointment management with intelligent scheduling tools that eliminate conflicts, reduce no-shows, and optimize your time for maximum productivity."
+      featureTabs={featureTabs}
+      featureDetails={featureDetails}
+      finalCTAText="See how AI Augments Calendar & Scheduling optimizes your time management."
+      onChatWithBot={handleChatWithBot}
+      onRequestDemo={handleRequestDemo}
+      onContactSales={handleContactSales}
+      onTakeTour={handleTakeTour}
+      onBrowseTours={handleBrowseTours}
+      onReadDatasheet={handleReadDatasheet}
+    />
   );
 }

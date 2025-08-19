@@ -1,16 +1,4 @@
-I'll analyze the codebase to understand the current architecture and create a migration plan for restructuring the apps. Let me start by exploring the current structure.
-Search files...
-Now let me explore the current routing and app structure to understand how apps are currently accessed:
-Search files...
-Now let me check the current SSO routing and how apps are launched:
-Search files...
-Now let me check if there's already any SSO routing endpoint:
-Ran tool
-Ran tool
-Now let me check the exact file structure and understand what apps are currently available by looking at the database seeding:
-Ran tool
-Ran tool
-Perfect! Now I have a comprehensive understanding of the current architecture. Let me create a detailed migration plan based on what I've learned:
+
 
 ## Migration Plan: From Database-Driven to Codebase-Managed Apps
 
@@ -139,7 +127,7 @@ interface AppModule {
 - Update SSO generation to work with new module system
 
 ### **Step 5: Special App Handling**
-- **ERPNext Business Suite**: Requires site creation workflow
+- **Business Suite**: Requires site creation workflow
 - **Regular SSO Apps**: Direct token generation and redirect
 - **Future Apps**: Custom creation/setup workflows
 

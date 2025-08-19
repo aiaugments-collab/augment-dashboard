@@ -8,6 +8,7 @@ import { marketingAutomationModule } from './modules/marketing-automation';
 import { customerSupportModule } from './modules/customer-support';
 import { socialMediaManagerModule } from './modules/social-media-manager';
 import { calendarSchedulerModule } from './modules/calendar-scheduler';
+import { aiHrModule } from './modules/ai-hr';
 
 // Initialize the app registry with all modules
 export function initializeAppRegistry() {
@@ -19,6 +20,7 @@ export function initializeAppRegistry() {
   appRegistry.registerApp('customer-support', customerSupportModule);
   appRegistry.registerApp('social-media-manager', socialMediaManagerModule);
   appRegistry.registerApp('calendar-scheduler', calendarSchedulerModule);
+  appRegistry.registerApp('ai-hr', aiHrModule);
   
   // TODO: Add all-in-one business suite when ready
   // appRegistry.registerApp('erpnext-business-suite', erpnextModule);

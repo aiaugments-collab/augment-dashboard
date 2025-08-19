@@ -1,7 +1,6 @@
 'use client';
 
-import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
-import { FirebaseSignOutButton } from '@/components/auth/firebase-signout-button';
+import { useStackAuth } from '@/hooks/use-stack-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -21,7 +20,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function DashboardHeader() {
-  const { firebaseUser, dbUser, loading } = useFirebaseAuth();
+  const { user, dbUser, loading, signOut } = useStackAuth();
 
   return (
     <div className="bg-background border-b border-border">
@@ -103,9 +102,15 @@ export function DashboardHeader() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={firebaseUser?.photoURL || dbUser?.picture} alt={firebaseUser?.displayName || dbUser?.name || 'User'} />
-                    <AvatarFallback>
-                      {firebaseUser?.displayName?.charAt(0) || firebaseUser?.email?.charAt(0) || dbUser?.name?.charAt(0) || 'U'}
+                    <AvatarImage 
+                      src={user?.profileImageUrl || dbUser?.picture || undefined} 
+                      alt={user?.displayName || dbUser?.name || 'User'} 
+                    />
+                    <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+                      {user?.displayName?.charAt(0)?.toUpperCase() || 
+                       user?.primaryEmail?.charAt(0)?.toUpperCase() || 
+                       dbUser?.name?.charAt(0)?.toUpperCase() || 
+                       'U'}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -113,12 +118,12 @@ export function DashboardHeader() {
               <DropdownMenuContent className="w-56" align="end">
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
-                    {(firebaseUser?.displayName || dbUser?.name) && (
-                      <p className="font-medium">{firebaseUser?.displayName || dbUser?.name}</p>
+                    {(user?.displayName || dbUser?.name) && (
+                      <p className="font-medium">{user?.displayName || dbUser?.name}</p>
                     )}
-                    {firebaseUser?.email && (
+                    {user?.primaryEmail && (
                       <p className="w-[200px] truncate text-sm text-muted-foreground">
-                        {firebaseUser.email}
+                        {user.primaryEmail}
                       </p>
                     )}
                   </div>
@@ -131,17 +136,21 @@ export function DashboardHeader() {
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <a href="/dashboard/account-settings">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Account Settings</span>
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/dashboard/settings">
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>App Settings</span>
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <FirebaseSignOutButton variant="ghost">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </FirebaseSignOutButton>
+                <DropdownMenuItem onClick={signOut}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

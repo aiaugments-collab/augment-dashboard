@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from "@stackframe/stack";
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -25,18 +25,19 @@ import {
 } from 'lucide-react';
 
 export default function ProfilePage() {
-  const { user, isLoading } = useUser();
+  const user = useUser();
+  const loading = false; // Stack Auth handles loading internally
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
+    name: user?.displayName || '',
+    email: user?.primaryEmail || '',
     phone: '',
     location: '',
     company: '',
     bio: ''
   });
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -59,8 +60,8 @@ export default function ProfilePage() {
 
   const handleCancel = () => {
     setFormData({
-      name: user?.name || '',
-      email: user?.email || '',
+      name: user?.displayName || '',
+      email: user?.primaryEmail || '',
       phone: '',
       location: '',
       company: '',
@@ -104,9 +105,9 @@ export default function ProfilePage() {
             <CardHeader className="text-center pb-4">
               <div className="relative mx-auto">
                 <Avatar className="h-24 w-24 mx-auto mb-4">
-                  <AvatarImage src={user.picture} alt={user.name || 'User'} />
+                  <AvatarImage src={user.profileImageUrl || ''} alt={user.displayName || 'User'} />
                   <AvatarFallback className="text-lg">
-                    {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
+                    {user.displayName?.charAt(0) || user.primaryEmail?.charAt(0) || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 {isEditing && (
@@ -119,8 +120,8 @@ export default function ProfilePage() {
                   </Button>
                 )}
               </div>
-              <CardTitle className="text-xl">{user.name}</CardTitle>
-              <p className="text-muted-foreground">{user.email}</p>
+              <CardTitle className="text-xl">{user.displayName}</CardTitle>
+              <p className="text-muted-foreground">{user.primaryEmail}</p>
               <div className="flex justify-center mt-3">
                 <Badge variant="secondary" className="flex items-center">
                   <Shield className="h-3 w-3 mr-1" />
@@ -131,7 +132,7 @@ export default function ProfilePage() {
             <CardContent className="space-y-4">
               <div className="flex items-center text-sm text-muted-foreground">
                 <Calendar className="h-4 w-4 mr-2" />
-                Member since {new Date(user.updated_at || Date.now()).toLocaleDateString('en-US', { 
+                Member since {new Date(Date.now()).toLocaleDateString('en-US', { 
                   month: 'long', 
                   year: 'numeric' 
                 })}
@@ -169,7 +170,7 @@ export default function ProfilePage() {
                       placeholder="Enter your full name"
                     />
                   ) : (
-                    <p className="text-sm bg-muted/50 rounded-md px-3 py-2">{user.name || 'Not set'}</p>
+                    <p className="text-sm bg-muted/50 rounded-md px-3 py-2">{user.displayName || 'Not set'}</p>
                   )}
                 </div>
 
@@ -185,9 +186,9 @@ export default function ProfilePage() {
                         placeholder="Enter your email"
                       />
                     ) : (
-                      <p className="text-sm bg-muted/50 rounded-md px-3 py-2 flex-1">{user.email}</p>
+                      <p className="text-sm bg-muted/50 rounded-md px-3 py-2 flex-1">{user.primaryEmail}</p>
                     )}
-                    {user.email_verified && (
+                    {user.primaryEmailVerified && (
                       <Badge variant="outline" className="text-green-600 border-green-600">
                         <Shield className="h-3 w-3 mr-1" />
                         Verified

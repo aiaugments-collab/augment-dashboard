@@ -1,13 +1,14 @@
 'use client';
 
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@stackframe/stack";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function UserProfile() {
-  const { user, isLoading } = useUser();
+  const user = useUser();
+  const loading = false; // Stack Auth handles loading internally
 
-  if (isLoading) {
+  if (loading) {
     return <div className="p-4">Loading...</div>;
   }
 
@@ -19,24 +20,24 @@ export default function UserProfile() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">
         <Avatar className="w-20 h-20 mx-auto mb-4">
-          <AvatarImage src={user.picture} alt={user.name || 'User'} />
+          <AvatarImage src={user.profileImageUrl || ''} alt={user.displayName || 'User'} />
           <AvatarFallback>
-            {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
+            {user.displayName?.charAt(0) || user.primaryEmail?.charAt(0) || 'U'}
           </AvatarFallback>
         </Avatar>
-        <CardTitle>{user.name}</CardTitle>
-        <CardDescription>{user.email}</CardDescription>
+        <CardTitle>{user.displayName}</CardTitle>
+        <CardDescription>{user.primaryEmail}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <div>
-            <strong>User ID:</strong> {user.sub}
+            <strong>User ID:</strong> {user.id}
           </div>
           <div>
-            <strong>Email Verified:</strong> {user.email_verified ? 'Yes' : 'No'}
+            <strong>Email Verified:</strong> {user.primaryEmailVerified ? 'Yes' : 'No'}
           </div>
           <div>
-            <strong>Last Login:</strong> {user.updated_at ? new Date(user.updated_at).toLocaleDateString() : 'N/A'}
+            <strong>User Since:</strong> Stack Auth
           </div>
         </div>
       </CardContent>

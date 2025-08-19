@@ -6,13 +6,13 @@ import { setSession } from '@/lib/auth/session';
 async function logActivity(
   teamId: string | null | undefined,
   userId: string,
-  type: ActivityType,
+  action: ActivityType,
   ipAddress?: string
 ) {
   const newActivity = new ActivityLog({
-    teamId,
+    teamId: teamId || undefined,
     userId,
-    action: type,
+    action: action, // ActivityType enum will be converted to string
     ipAddress: ipAddress || 'unknown'
   });
   
@@ -21,48 +21,72 @@ async function logActivity(
 
 export async function POST(request: NextRequest) {
   try {
-    const { uid, email, name, emailVerified, photoURL } = await request.json();
+    const { id, email, name, picture, emailVerified, provider } = await request.json();
 
-    if (!uid || !email) {
+    if (!id || !email || !provider) {
       return NextResponse.json(
-        { success: false, error: 'Missing required fields' },
+        { success: false, error: 'Missing required fields: id, email, provider' },
         { status: 400 }
       );
     }
 
     await connectDB();
 
-    // Find existing user by Firebase UID or email
+    // Find existing user by provider-specific ID or email
     let user = await User.findOne({
       $or: [
-        { firebaseUid: uid },
-        { email: email }
+        { authProviderId: provider, providerSpecificId: id },
+        { email: email },
+        // Legacy provider compatibility
+        ...(provider === 'firebase' ? [{ firebaseUid: id }] : []),
+        ...(provider === 'auth0' ? [{ auth0Id: id }] : []),
       ]
     });
 
     let isNewUser = false;
 
     if (user) {
-      // Update existing user with Firebase data
-      user.firebaseUid = uid;
+      // Update existing user with new provider data
+      user.authProviderId = provider;
+      user.providerSpecificId = id;
       user.email = email;
       user.name = name || user.name;
-      user.emailVerified = emailVerified;
-      user.picture = photoURL || user.picture;
+      user.emailVerified = emailVerified ?? user.emailVerified;
+      user.picture = picture || user.picture;
       user.lastLogin = new Date();
+
+      // Migrate legacy fields
+      if (provider === 'firebase' && !user.firebaseUid) {
+        user.firebaseUid = id;
+      }
+      if (provider === 'auth0' && !user.auth0Id) {
+        user.auth0Id = id;
+      }
+
       await user.save();
     } else {
       // Create new user
       isNewUser = true;
-      user = new User({
-        firebaseUid: uid,
+      const userData: any = {
+        authProviderId: provider,
+        providerSpecificId: id,
         email,
         name: name || '',
-        emailVerified,
-        picture: photoURL,
+        emailVerified: emailVerified ?? false,
+        picture: picture,
         role: 'member',
         lastLogin: new Date()
-      });
+      };
+
+      // Set legacy fields for compatibility
+      if (provider === 'firebase') {
+        userData.firebaseUid = id;
+      }
+      if (provider === 'auth0') {
+        userData.auth0Id = id;
+      }
+
+      user = new User(userData);
       await user.save();
 
       // Create a team for new users
@@ -88,30 +112,34 @@ export async function POST(request: NextRequest) {
     }
 
     // Set session for the user
-    await setSession(user);
+    await setSession({ id: user._id.toString() });
 
     // Log sign in activity
     const teamMember = await TeamMember.findOne({ userId: user._id.toString() })
       .populate('teamId');
     const team = teamMember?.teamId as any;
     
-    if (team) {
-      await logActivity(team._id.toString(), user._id.toString(), ActivityType.SIGN_IN);
-    }
+    await logActivity(
+      team?._id?.toString(),
+      user._id.toString(),
+      isNewUser ? ActivityType.CREATE_USER : ActivityType.SIGN_IN
+    );
 
     return NextResponse.json({
       success: true,
       user: {
-        id: user._id,
-        email: user.email,
+        _id: user._id.toString(),
         name: user.name,
+        email: user.email,
         role: user.role,
-        isNewUser
-      }
+        authProviderId: user.authProviderId,
+        providerSpecificId: user.providerSpecificId,
+      },
+      isNewUser
     });
 
   } catch (error) {
-    console.error('Error syncing Firebase user:', error);
+    console.error('User sync error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

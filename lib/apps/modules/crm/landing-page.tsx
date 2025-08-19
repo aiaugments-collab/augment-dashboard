@@ -1,420 +1,325 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { AppModuleProps } from '../../types';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  TrendingUp, Users, Target, BarChart3, Zap, MessageSquare, 
-  ExternalLink, ArrowUpCircle, CheckCircle, Star, ArrowLeft,
-  Phone, Mail, Calendar, Globe, DollarSign, Clock, 
-  ChevronDown, ChevronUp, Play, Smartphone, Database,
-  PieChart, Bell, Shield, Workflow, FileText, Link2
-} from 'lucide-react';
-import {
-  LandingHeader,
-  HeroSection,
-  StatsSection,
-  FeaturesSection,
-  SocialProofSection,
-  TestimonialsSection,
-  CTASection,
-  LandingFooter
-} from '../../base/landing-components';
+import CompleteAppLanding from '@/components/landing/complete-app-landing';
+import AdvancedDetailedFeaturesSection from '@/components/landing/detailed-features-section-advanced';
 
 export function CRMLandingPage(props: AppModuleProps) {
   const router = useRouter();
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const handleLaunch = () => {
     router.push('/app/crm/launch');
   };
 
-  const stats = [
-    { value: "30%", label: "Increase in Sales", color: "blue" },
-    { value: "45%", label: "Faster Lead Response", color: "green" },
-    { value: "60%", label: "Time Saved on Admin", color: "purple" },
-    { value: "25%", label: "Higher Conversion", color: "orange" }
-  ];
+  const handleChatWithBot = () => {
+    console.log('Opening chatbot for CRM');
+  };
 
-  const mainFeatures = [
+  const handleRequestDemo = () => {
+    console.log('Requesting demo for CRM');
+  };
+
+  const handleContactSales = () => {
+    console.log('Contacting sales for CRM');
+  };
+
+  const handleTakeTour = () => {
+    console.log('Taking tour for CRM');
+  };
+
+  const handleBrowseTours = () => {
+    console.log('Browsing product tours');
+  };
+
+  const handleReadDatasheet = () => {
+    console.log('Reading CRM datasheet');
+  };
+
+  // Hero configuration
+  const heroProps = {
+    title: "AI-Powered CRM & Sales Management",
+    description: [
+      'Our complete <span class="text-blue-600 font-medium">AI-powered CRM</span> solution with embedded <span class="text-blue-600 font-medium">artificial intelligence</span> brings consistent processes and a single source of truth across your entire sales organization—from lead management and pipeline tracking to customer relationship management and sales analytics.',
+      'The application helps you improve your customer engagements, increase your sales team\'s productivity, and close more deals faster than ever before.'
+    ],
+    videoTitle: "What is the AI Augments CRM & Sales Management Suite?",
+    videoDuration: "2:45",
+    dashboardColor: {
+      primary: "bg-gradient-to-br from-blue-50 via-white to-green-50",
+      secondary: "bg-blue-100",
+      accent: "bg-green-100"
+    },
+    dashboardMetrics: {
+      metric1: { label: "Leads", color: "bg-blue-100" },
+      metric2: { label: "Deals", color: "bg-green-100" },
+      metric3: { label: "Revenue", color: "bg-purple-100" }
+    },
+    centralFigureColor: "bg-gradient-to-b from-blue-400 to-blue-600",
+    bottomGradient: "bg-gradient-to-r from-blue-100 via-purple-100 to-green-100",
+    featureShowcases: {
+      feature1: { label: "Lead Management", color: "bg-gradient-to-br from-blue-200 to-blue-400" },
+      feature2: { label: "Sales Pipeline", color: "bg-gradient-to-br from-green-200 to-green-400" },
+      feature3: { label: "AI Analytics", color: "bg-gradient-to-br from-purple-200 to-purple-400" },
+      feature4: { label: "Deal Tracking", color: "bg-gradient-to-br from-orange-200 to-orange-400" }
+    }
+  };
+
+  // Related products
+  const relatedProducts = [
     {
-      icon: Target,
-      title: "Lead Management",
-      description: "Capture, qualify, and nurture leads from multiple channels with automated scoring and routing.",
-      color: "blue"
+      title: "AI Augments Marketing Automation",
+      subtitle: "Intelligent campaign management",
+      description: "Automate your marketing campaigns with AI-powered insights and lead nurturing capabilities.",
+      actionText: "See marketing automation details",
+      onAction: () => router.push('/app/marketing-automation')
     },
     {
-      icon: BarChart3,
-      title: "Sales Pipeline",
-      description: "Visual pipeline management with drag-and-drop functionality and customizable sales stages.",
-      color: "green"
+      title: "AI Augments Customer Support",
+      subtitle: "Smart customer service",
+      description: "Deliver exceptional customer support with AI-powered ticketing and knowledge management.",
+      actionText: "See customer support details",
+      onAction: () => router.push('/app/customer-support')
     },
     {
-      icon: Users,
-      title: "Contact Management",
-      description: "Centralized customer database with complete interaction history and relationship tracking.",
-      color: "purple"
+      title: "AI Augments Human Resources",
+      subtitle: "Intelligent workforce management",
+      description: "Streamline your HR processes with AI-powered employee management and analytics.",
+      actionText: "See HR management details",
+      onAction: () => router.push('/app/human-resources')
     },
     {
-      icon: DollarSign,
-      title: "Deal Tracking",
-      description: "Monitor opportunities from initial contact to close with probability scoring and forecasting.",
-      color: "orange"
-    },
-    {
-      icon: Mail,
-      title: "Email Integration",
-      description: "Sync with your email provider for seamless communication tracking and automated follow-ups.",
-      color: "teal"
-    },
-    {
-      icon: Phone,
-      title: "Call Management",
-      description: "Built-in calling with automatic logging, recording, and CRM data integration.",
-      color: "indigo"
+      title: "AI Augments Digital Signature",
+      subtitle: "Secure document signing",
+      description: "Close deals faster with legally compliant digital signatures and document management.",
+      actionText: "See digital signature details",
+      onAction: () => router.push('/app/digital-signature')
     }
   ];
 
-  const advancedFeatures = [
+  // Benefits
+  const benefits = [
     {
-      icon: Workflow,
-      title: "Sales Automation",
-      description: "Automate repetitive tasks, follow-ups, and workflows to focus on closing deals.",
-      color: "blue"
+      title: "Accelerate sales cycles with AI insights",
+      description: "Gain real-time visibility into your sales pipeline to close deals faster while reducing manual work and increasing conversion rates.",
+      actionText: "Learn about AI-powered sales (PDF)",
+      actionType: 'pdf' as const,
+      onAction: () => console.log('Download AI sales PDF')
     },
     {
-      icon: PieChart,
-      title: "Advanced Analytics",
-      description: "Real-time dashboards with sales forecasting, performance metrics, and ROI tracking.",
-      color: "green"
+      title: "Optimize lead management and scoring",
+      description: "Automatically score and prioritize leads based on AI analysis to focus your team's efforts on the highest-value opportunities.",
+      actionText: "Take a lead scoring tour",
+      actionType: 'tour' as const,
+      onAction: () => console.log('Lead scoring tour')
     },
     {
-      icon: Bell,
-      title: "Smart Notifications",
-      description: "AI-powered alerts for hot leads, deal updates, and follow-up reminders.",
-      color: "yellow"
-    },
-    {
-      icon: Link2,
-      title: "Integrations",
-      description: "Connect with 100+ tools including email, calendar, marketing automation, and accounting software.",
-      color: "purple"
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile CRM",
-      description: "Full-featured mobile app for managing your sales process on the go.",
-      color: "pink"
-    },
-    {
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "Bank-level security with SOC 2 compliance, data encryption, and role-based access.",
-      color: "red"
+      title: "Enhance customer relationship tracking",
+      description: "Maintain comprehensive customer profiles and interaction histories to improve relationships and increase customer lifetime value.",
+      actionText: "Explore customer insights features",
+      actionType: 'link' as const,
+      onAction: () => console.log('Customer insights')
     }
   ];
 
-  const testimonials = [
-    {
-      quote: "Our sales team closed 40% more deals in the first quarter after implementing this CRM. The automation features saved us 20 hours per week.",
-      author: "Sarah Johnson",
-      role: "Sales Director",
-      company: "TechCorp Solutions"
-    },
-    {
-      quote: "The lead scoring and pipeline management transformed how we approach sales. We can now focus on the hottest prospects and close deals faster.",
-      author: "Mike Chen",
-      role: "VP of Sales",
-      company: "Growth Dynamics"
-    },
-    {
-      quote: "Integration with our existing tools was seamless. The reporting gives us insights we never had before, helping us optimize our entire sales process.",
-      author: "Emily Rodriguez",
-      role: "Operations Manager",
-      company: "Scale Ventures"
-    }
+  // Customer story
+  const customerStory = {
+    title: "TechFlow Solutions increases sales conversion by 40% with AI-powered CRM insights",
+    description: "Discover how TechFlow Solutions transformed their sales process and improved customer relationships using AI Augments CRM, resulting in a 40% increase in conversion rates and 25% reduction in sales cycle time.",
+    actionText: "Read the TechFlow story",
+    onAction: () => console.log('Read customer story')
+  };
+
+  // Customer logos
+  const customerLogos = [
+    "TechFlow", "SalesForce Pro", "GrowthCorp", "LeadGen Inc", 
+    "ConvertMax", "Pipeline Co", "RevBoost", "CRM Masters", "Deal Closers"
   ];
 
-  const comparisonFeatures = [
-    { feature: "Contact Management", us: true, competitor1: true, competitor2: true },
-    { feature: "Advanced Pipeline Management", us: true, competitor1: true, competitor2: false },
-    { feature: "Built-in Calling & Recording", us: true, competitor1: false, competitor2: true },
-    { feature: "AI-Powered Lead Scoring", us: true, competitor1: false, competitor2: false },
-    { feature: "Unlimited Email Tracking", us: true, competitor1: "Limited", competitor2: "Paid Add-on" },
-    { feature: "Custom Reporting Dashboard", us: true, competitor1: "Limited", competitor2: true },
-    { feature: "Mobile App (iOS & Android)", us: true, competitor1: true, competitor2: false },
-    { feature: "API Access", us: true, competitor1: "Enterprise Only", competitor2: "Paid Add-on" },
-    { feature: "24/7 Support", us: true, competitor1: false, competitor2: "Enterprise Only" }
+  // Advanced Features Section Data
+  const featureTabs = [
+    { id: 'lead-management', title: 'Lead management and scoring' },
+    { id: 'sales-pipeline', title: 'Sales pipeline optimization' },
+    { id: 'customer-insights', title: 'Customer relationship insights' },
+    { id: 'ai-analytics', title: 'AI-powered sales analytics' },
+    { id: 'automation', title: 'Sales process automation' },
+    { id: 'integration', title: 'Third-party integrations' }
   ];
 
-  const faqs = [
-    {
-      question: "How quickly can we get started?",
-      answer: "Most teams are up and running within 24 hours. Our setup wizard guides you through importing contacts, configuring your pipeline, and connecting integrations. We also provide onboarding support to ensure a smooth transition."
+  const featureDetails = {
+    'lead-management': {
+      title: 'Lead management and scoring',
+      subtitle: 'Intelligent lead qualification and prioritization',
+      description: 'Transform your lead management process with AI-powered lead scoring that automatically evaluates and prioritizes prospects based on their likelihood to convert, engagement patterns, and behavioral data.',
+      subsections: [
+        {
+          title: 'AI-powered lead scoring',
+          description: 'Automatically score leads based on demographic data, behavioral patterns, engagement history, and predictive analytics to identify your highest-value prospects.'
+        },
+        {
+          title: 'Lead qualification automation',
+          description: 'Streamline lead qualification with automated workflows that route leads to the right sales reps based on territory, expertise, and availability.'
+        },
+        {
+          title: 'Lead nurturing campaigns',
+          description: 'Create sophisticated nurturing sequences that adapt based on lead behavior, engagement levels, and stage in the buying journey.'
+        }
+      ],
+      actions: [
+        { text: 'Read the Lead Management data sheet (PDF)', type: 'link' as const, onAction: () => console.log('Lead management PDF') },
+        { text: 'Take a lead scoring demo', type: 'secondary' as const, onAction: () => console.log('Lead scoring demo') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
     },
-    {
-      question: "Can we import data from our current CRM?",
-      answer: "Yes! We support data migration from all major CRM platforms including Salesforce, HubSpot, Pipedrive, and others. Our migration specialists will handle the entire process to ensure no data is lost."
+    'sales-pipeline': {
+      title: 'Sales pipeline optimization',
+      subtitle: 'Accelerate deals through every stage',
+      description: 'Gain complete visibility into your sales pipeline with advanced forecasting, deal progression tracking, and AI-powered recommendations to close deals faster.',
+      subsections: [
+        {
+          title: 'Pipeline forecasting',
+          description: 'Get accurate sales forecasts with AI-powered predictive analytics that analyze historical data, current pipeline health, and market trends.'
+        },
+        {
+          title: 'Deal progression tracking',
+          description: 'Monitor deal progression in real-time with automated stage updates, milestone tracking, and bottleneck identification.'
+        },
+        {
+          title: 'Revenue optimization',
+          description: 'Maximize revenue potential with intelligent pricing recommendations, upselling opportunities, and cross-selling suggestions.'
+        }
+      ],
+      actions: [
+        { text: 'Explore pipeline optimization features', type: 'link' as const, onAction: () => console.log('Pipeline features') },
+        { text: 'See forecasting in action', type: 'secondary' as const, onAction: () => console.log('Forecasting demo') }
+      ],
+      mockupContent: { type: 'table' as const }
     },
-    {
-      question: "What integrations are available?",
-      answer: "We integrate with 100+ tools including Gmail, Outlook, Slack, Zoom, QuickBooks, Mailchimp, and more. We also provide a robust API for custom integrations."
+    'customer-insights': {
+      title: 'Customer relationship insights',
+      subtitle: 'Deep customer intelligence for better relationships',
+      description: 'Build stronger customer relationships with comprehensive customer profiles, interaction history, and AI-powered insights that help you understand and serve your customers better.',
+      subsections: [
+        {
+          title: '360-degree customer view',
+          description: 'Access complete customer profiles with contact information, interaction history, purchase behavior, and communication preferences in one unified view.'
+        },
+        {
+          title: 'Relationship mapping',
+          description: 'Visualize customer relationships, identify key stakeholders, and track influence patterns to navigate complex B2B sales processes.'
+        },
+        {
+          title: 'Customer health scoring',
+          description: 'Monitor customer satisfaction and predict churn risk with AI-powered health scores based on engagement, usage, and support interactions.'
+        }
+      ],
+      actions: [
+        { text: 'Learn about customer insights (PDF)', type: 'link' as const, onAction: () => console.log('Customer insights PDF') },
+        { text: 'View customer profiles demo', type: 'secondary' as const, onAction: () => console.log('Customer profiles demo') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
     },
-    {
-      question: "Is there a mobile app?",
-      answer: "Yes, we have full-featured mobile apps for both iOS and Android. You can manage your entire sales process, make calls, send emails, and update deals from anywhere."
+    'ai-analytics': {
+      title: 'AI-powered sales analytics',
+      subtitle: 'Data-driven sales intelligence',
+      description: 'Make informed decisions with advanced analytics and AI-powered insights that reveal sales patterns, performance trends, and optimization opportunities.',
+      subsections: [
+        {
+          title: 'Performance analytics',
+          description: 'Track individual and team performance with comprehensive dashboards showing conversion rates, activity metrics, and goal achievement.'
+        },
+        {
+          title: 'Predictive insights',
+          description: 'Leverage machine learning to predict deal outcomes, identify at-risk opportunities, and recommend next best actions for each prospect.'
+        },
+        {
+          title: 'Sales coaching intelligence',
+          description: 'Identify coaching opportunities with AI analysis of sales calls, email interactions, and deal progression patterns.'
+        }
+      ],
+      actions: [
+        { text: 'Read analytics capabilities overview (PDF)', type: 'link' as const, onAction: () => console.log('Analytics PDF') },
+        { text: 'See AI insights in action', type: 'secondary' as const, onAction: () => console.log('AI insights demo') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
     },
-    {
-      question: "How secure is our data?",
-      answer: "Security is our top priority. We're SOC 2 Type II certified, use bank-level encryption, and provide regular security audits. Your data is hosted on secure AWS servers with automatic backups."
+    'automation': {
+      title: 'Sales process automation',
+      subtitle: 'Eliminate manual work and focus on selling',
+      description: 'Automate repetitive tasks and streamline your sales processes with intelligent workflows that adapt to your team\'s unique selling methodology.',
+      subsections: [
+        {
+          title: 'Workflow automation',
+          description: 'Create sophisticated automation rules that trigger actions based on lead behavior, deal stages, and time-based events.'
+        },
+        {
+          title: 'Email automation',
+          description: 'Send personalized, timely emails with smart templates that adapt based on prospect profile, engagement history, and sales stage.'
+        },
+        {
+          title: 'Task automation',
+          description: 'Automatically create follow-up tasks, schedule meetings, and update records based on predefined rules and AI recommendations.'
+        }
+      ],
+      actions: [
+        { text: 'Explore automation workflows', type: 'link' as const, onAction: () => console.log('Automation workflows') },
+        { text: 'See automation in action', type: 'secondary' as const, onAction: () => console.log('Automation demo') }
+      ],
+      mockupContent: { type: 'table' as const }
     },
-    {
-      question: "What support do you provide?",
-      answer: "We offer 24/7 customer support via chat, email, and phone. Plus, dedicated onboarding assistance, training materials, and a comprehensive knowledge base."
+    'integration': {
+      title: 'Third-party integrations',
+      subtitle: 'Connect your entire sales tech stack',
+      description: 'Seamlessly integrate with your existing tools and systems to create a unified sales ecosystem that maximizes productivity and data consistency.',
+      subsections: [
+        {
+          title: 'Marketing automation integration',
+          description: 'Connect with leading marketing platforms to ensure seamless lead handoff and maintain lead context throughout the sales process.'
+        },
+        {
+          title: 'Communication tools',
+          description: 'Integrate with email platforms, video conferencing tools, and phone systems to track all customer interactions in one place.'
+        },
+        {
+          title: 'Business applications',
+          description: 'Connect with ERP, accounting, and customer support systems to provide a complete view of customer relationships and business processes.'
+        }
+      ],
+      actions: [
+        { text: 'View integration catalog', type: 'link' as const, onAction: () => console.log('Integration catalog') },
+        { text: 'See integrations demo', type: 'secondary' as const, onAction: () => console.log('Integrations demo') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
     }
-  ];
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <LandingHeader
-        title="CRM & Sales"
-        hasAccess={props.hasAccess}
-        onLaunch={handleLaunch}
-        launchText="Launch CRM"
-        accentColor="blue"
-      />
-
-      {/* Hero Section */}
-      <HeroSection
-        icon={TrendingUp}
-        title="CRM &"
-        subtitle="Sales"
-        description="Transform your sales process with our comprehensive CRM platform. Track leads, manage opportunities, and close more deals with intelligent automation."
-        hasAccess={props.hasAccess}
-        onLaunch={handleLaunch}
-        launchText="Launch CRM Now"
-        accentColor="blue"
-        upgradeReason="This powerful CRM requires a paid subscription to access all advanced features."
-      />
-
-      {/* ROI Statistics */}
-      <StatsSection stats={stats} />
-
-      {/* Main Features */}
-      <FeaturesSection
-        title="Everything You Need to {{accent}}Close More Deals"
-        subtitle="From lead capture to deal closure, our CRM provides all the tools your sales team needs to succeed."
-        features={mainFeatures}
-        accentColor="blue"
-      />
-
-      {/* Demo Video Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                See It In Action
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Watch how our CRM streamlines your entire sales process, from lead capture to deal closure. 
-                See real examples of automation, pipeline management, and reporting in action.
-              </p>
-              <ul className="space-y-4 mb-8">
-                {[
-                  "Lead scoring and qualification automation",
-                  "Visual pipeline management",
-                  "Email tracking and automation",
-                  "Advanced reporting and forecasting"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="text-gray-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              {props.hasAccess ? (
-                <Button onClick={handleLaunch} className="bg-blue-600 hover:bg-blue-700 text-white">
-                  <Play className="h-4 w-4 mr-2" />
-                  Try It Now
-                </Button>
-              ) : (
-                <Link href="/pricing">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                    <Play className="h-4 w-4 mr-2" />
-                    Start Free Trial
-                  </Button>
-                </Link>
-              )}
-            </div>
-            <div className="relative">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
-                <div className="text-center">
-                  <Play className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-                  <p className="text-gray-600 font-medium">Interactive Product Demo</p>
-                  <p className="text-sm text-gray-500">Click to explore our CRM</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Advanced Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Advanced Features for <span className="text-blue-600">Enterprise Sales</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Go beyond basic CRM with advanced automation, AI-powered insights, and enterprise-grade security.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {advancedFeatures.map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-sm">
-                <CardContent className="p-6">
-                  <div className={`p-3 bg-${feature.color}-100 rounded-lg w-fit mb-4`}>
-                    <feature.icon className={`h-6 w-6 text-${feature.color}-600`} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Our <span className="text-blue-600">CRM</span>?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              See how we compare to other popular CRM solutions. More features, better value.
-            </p>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse bg-white rounded-lg shadow-sm">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left p-4 font-semibold text-gray-900">Features</th>
-                  <th className="text-center p-4 font-semibold text-blue-600">Our CRM</th>
-                  <th className="text-center p-4 font-semibold text-gray-600">Competitor A</th>
-                  <th className="text-center p-4 font-semibold text-gray-600">Competitor B</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonFeatures.map((row, index) => (
-                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="p-4 font-medium text-gray-900">{row.feature}</td>
-                    <td className="p-4 text-center">
-                      {row.us === true ? (
-                        <CheckCircle className="h-5 w-5 text-green-500 mx-auto" />
-                      ) : (
-                        <span className="text-blue-600 font-medium">{row.us}</span>
-                      )}
-                    </td>
-                    <td className="p-4 text-center">
-                      {row.competitor1 === true ? (
-                        <CheckCircle className="h-5 w-5 text-green-500 mx-auto" />
-                      ) : row.competitor1 === false ? (
-                        <span className="text-red-500">✕</span>
-                      ) : (
-                        <span className="text-orange-500 text-sm">{row.competitor1}</span>
-                      )}
-                    </td>
-                    <td className="p-4 text-center">
-                      {row.competitor2 === true ? (
-                        <CheckCircle className="h-5 w-5 text-green-500 mx-auto" />
-                      ) : row.competitor2 === false ? (
-                        <span className="text-red-500">✕</span>
-                      ) : (
-                        <span className="text-orange-500 text-sm">{row.competitor2}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <TestimonialsSection testimonials={testimonials} />
-
-      {/* Social Proof */}
-      <SocialProofSection
-        title="Trusted by over 10,000+ businesses worldwide"
-        companies={['TechCorp', 'SalesForce Pro', 'Growth Co', 'Scale Inc', 'Revenue Labs']}
-        accentColor="blue"
-      />
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-600">
-              Everything you need to know about our CRM platform
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <Card key={index} className="border border-gray-200">
-                <CardHeader 
-                  className="cursor-pointer hover:bg-gray-50 transition-colors"
-                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900">{faq.question}</h3>
-                    {openFAQ === index ? (
-                      <ChevronUp className="h-5 w-5 text-gray-500" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-gray-500" />
-                    )}
-                  </div>
-                </CardHeader>
-                {openFAQ === index && (
-                  <CardContent className="pt-0">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                  </CardContent>
-                )}
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <CTASection
-        title="Ready to Transform Your Sales Process?"
-        subtitle="Join thousands of sales teams who've increased their revenue with our CRM platform."
-        hasAccess={props.hasAccess}
-        onLaunch={handleLaunch}
-        launchText="Launch CRM Now"
-        accentColor="blue"
-      />
-
-      {/* Footer */}
-      <LandingFooter
-        appName="CRM & Sales"
-        githubUrl="https://github.com/backink/crm-app"
+      <CompleteAppLanding
+        appName="CRM & Sales Management"
+        hero={heroProps}
+        includeGetStarted={true}
+        includeBenefits={true}
+        includeCustomerSuccess={true}
+        includeRelatedProducts={true}
+        includeAdvancedFeatures={true}
+        includeFinalCTA={true}
+        relatedProducts={relatedProducts}
+        benefits={benefits}
+        customerStory={customerStory}
+        customerLogos={customerLogos}
+        advancedFeaturesTitle="AI Augments CRM & Sales Management features"
+        advancedFeaturesDescription="Gain full visibility into and control of your sales process across your organization and customer networks to improve conversion rates, decrease sales cycles, and optimize revenue generation and customer satisfaction."
+        featureTabs={featureTabs}
+        featureDetails={featureDetails}
+        finalCTAText="See how AI Augments CRM & Sales Management transforms your sales process."
+        onChatWithBot={handleChatWithBot}
+        onRequestDemo={handleRequestDemo}
+        onContactSales={handleContactSales}
+        onTakeTour={handleTakeTour}
+        onBrowseTours={handleBrowseTours}
+        onReadDatasheet={handleReadDatasheet}
       />
     </div>
   );

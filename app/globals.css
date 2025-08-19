@@ -8,6 +8,70 @@
 
 @variant dark (&:is(.dark *));
 
+/* Oracle-Style Color Palette and Global Styles */
+:root {
+  /* Oracle Color Palette */
+  --oracle-red: #dc2626;
+  --oracle-red-light: #ef4444;
+  --oracle-red-dark: #991b1b;
+  --oracle-blue: #2563eb;
+  --oracle-blue-light: #3b82f6;
+  --oracle-blue-dark: #1d4ed8;
+  --oracle-gray-50: #f9fafb;
+  --oracle-gray-100: #f3f4f6;
+  --oracle-gray-200: #e5e7eb;
+  --oracle-gray-300: #d1d5db;
+  --oracle-gray-400: #9ca3af;
+  --oracle-gray-500: #6b7280;
+  --oracle-gray-600: #4b5563;
+  --oracle-gray-700: #374151;
+  --oracle-gray-800: #1f2937;
+  --oracle-gray-900: #111827;
+}
+
+/* Oracle Professional Styles */
+.oracle-heading {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--oracle-gray-900);
+}
+
+.oracle-subheading {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--oracle-gray-800);
+}
+
+.oracle-body {
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--oracle-gray-600);
+}
+
+.oracle-button-primary {
+  background-color: var(--oracle-red);
+  color: white;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.oracle-button-primary:hover {
+  background-color: var(--oracle-red-dark);
+}
+
+.oracle-button-secondary {
+  background-color: transparent;
+  color: var(--oracle-gray-700);
+  border: 1px solid var(--oracle-gray-300);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.oracle-button-secondary:hover {
+  background-color: var(--oracle-gray-50);
+  border-color: var(--oracle-gray-400);
+}
+
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
+import { useStackAuth } from '@/hooks/use-stack-auth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -51,7 +51,7 @@ export function DashboardSidebar() {
   const [expandedSections, setExpandedSections] = useState<string[]>(['favorites', 'ai-agents']);
   const [apps, setApps] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { firebaseUser, dbUser } = useFirebaseAuth();
+  const { user, dbUser } = useStackAuth();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -196,17 +196,27 @@ export function DashboardSidebar() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="p-1">
                 <Avatar className="h-7 w-7">
-                  <AvatarImage src={firebaseUser?.photoURL || dbUser?.picture} alt={firebaseUser?.displayName || dbUser?.name || 'User'} />
-                  <AvatarFallback className="text-xs">
-                    {firebaseUser?.displayName?.charAt(0) || firebaseUser?.email?.charAt(0) || dbUser?.name?.charAt(0) || 'U'}
+                  <AvatarImage 
+                    src={(user?.profileImageUrl && user.profileImageUrl.trim()) || 
+                         (dbUser?.picture && dbUser.picture.trim()) || 
+                         undefined} 
+                    alt={user?.displayName || dbUser?.name || 'User'} 
+                  />
+                  <AvatarFallback className="text-xs bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+                    {user?.displayName?.charAt(0)?.toUpperCase() || 
+                     user?.primaryEmail?.charAt(0)?.toUpperCase() || 
+                     dbUser?.name?.charAt(0)?.toUpperCase() || 
+                     'U'}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
+              <DropdownMenuItem asChild>
+                <a href="/dashboard/account-settings">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Account Settings
+                </a>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <HelpCircle className="mr-2 h-4 w-4" />

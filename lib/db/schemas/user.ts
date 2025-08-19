@@ -4,9 +4,16 @@ export interface IUser extends Document {
   _id: string;
   name?: string;
   email: string;
-  passwordHash?: string; // Optional for Auth0/Firebase users
+  passwordHash?: string; // Optional for external auth providers
+  
+  // Generic auth provider fields
+  authProviderId: string; // Which provider they use ('stack-auth', 'firebase', 'auth0', etc.)
+  providerSpecificId: string; // Provider's user ID
+  
+  // Legacy auth provider fields (for migration compatibility)
   auth0Id?: string; // Auth0 user ID
   firebaseUid?: string; // Firebase user ID
+  
   picture?: string; // Profile picture URL
   emailVerified?: boolean;
   role: string;
@@ -35,8 +42,21 @@ const UserSchema = new Schema<IUser>({
   },
   passwordHash: {
     type: String,
-    required: false // Not required for Auth0 users
+    required: false // Not required for external auth providers
   },
+  // Generic auth provider fields
+  authProviderId: {
+    type: String,
+    required: true,
+    default: 'stack-auth',
+    maxlength: 50
+  },
+  providerSpecificId: {
+    type: String,
+    required: true,
+    maxlength: 255
+  },
+  // Legacy auth provider fields (for migration compatibility)
   auth0Id: {
     type: String,
     unique: true,

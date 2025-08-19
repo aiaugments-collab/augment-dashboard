@@ -4,6 +4,7 @@ import { getUserById } from '@/lib/auth/firebase-user-sync';
 import { getApp, isAppAvailable } from '@/lib/apps/registry';
 import { LaunchContext } from '@/lib/apps/types';
 import { initializeAppRegistry } from '@/lib/apps/initialize-registry';
+import LaunchRedirect from './launch-redirect';
 
 interface LaunchPageProps {
   params: Promise<{ slug: string }>;
@@ -59,8 +60,20 @@ export default async function LaunchPage({ params, searchParams }: LaunchPagePro
     const launchResult = await appEntry.module.launchHandler(launchContext);
     
     if (launchResult.success && launchResult.redirectUrl) {
-      // Redirect to the app
-      redirect(launchResult.redirectUrl);
+      // Check if app should launch in new tab
+      if (appEntry.module.metadata.launchInNewTab) {
+        // Return client component to handle new tab opening
+        return (
+          <LaunchRedirect 
+            url={launchResult.redirectUrl} 
+            appName={appEntry.module.metadata.name}
+            returnUrl={`/app/${slug}`}
+          />
+        );
+      } else {
+        // Regular redirect for same-tab launches
+        redirect(launchResult.redirectUrl);
+      }
     } else if (launchResult.requiresSetup && launchResult.setupUrl) {
       // Redirect to setup page
       redirect(launchResult.setupUrl);

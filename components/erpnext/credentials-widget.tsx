@@ -104,7 +104,7 @@ export function ErpNextCredentialsWidget() {
             <Building2 className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">ERPNext Business Suite</h3>
+            <h3 className="font-semibold text-gray-900">Business Suite</h3>
             <p className="text-sm text-gray-600">Loading credentials...</p>
           </div>
         </div>
@@ -127,7 +127,7 @@ export function ErpNextCredentialsWidget() {
             <Building2 className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">ERPNext Business Suite</h3>
+            <h3 className="font-semibold text-gray-900">Business Suite</h3>
             <p className="text-sm text-gray-600">Your personal business platform</p>
           </div>
         </div>

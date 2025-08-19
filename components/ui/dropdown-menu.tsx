@@ -85,7 +85,11 @@ const DropdownMenuContent = React.forwardRef<
     >
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child as any, { setIsOpen })
+          // Only pass setIsOpen to function components (React components), not DOM elements
+          if (typeof child.type === 'function') {
+            return React.cloneElement(child as any, { setIsOpen })
+          }
+          return child
         }
         return child
       })}

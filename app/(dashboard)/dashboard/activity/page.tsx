@@ -14,7 +14,7 @@ import {
 import { getActivityLogs } from '@/lib/db/queries';
 import { ActivityType } from '@/lib/db/schemas';
 
-const iconMap: Record<ActivityType, LucideIcon> = {
+const iconMap: Partial<Record<ActivityType, LucideIcon>> = {
   [ActivityType.SIGN_UP]: UserPlus,
   [ActivityType.SIGN_IN]: UserCog,
   [ActivityType.SIGN_OUT]: LogOut,

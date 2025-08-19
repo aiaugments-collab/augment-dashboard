@@ -2,16 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { AppModuleProps } from '../../types';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Zap, Target, Mail, BarChart3, Users, Globe,
-  ExternalLink, ArrowUpCircle, CheckCircle, Star, ArrowLeft,
-  TrendingUp, MessageSquare, Calendar, Brain, Rocket, Crown
-} from 'lucide-react';
+import CompleteAppLanding from '@/components/landing/complete-app-landing';
 
 export function MarketingAutomationLandingPage(props: AppModuleProps) {
   const router = useRouter();
@@ -20,302 +12,210 @@ export function MarketingAutomationLandingPage(props: AppModuleProps) {
     router.push('/app/marketing-automation/launch');
   };
 
+  const handleChatWithBot = () => {
+    console.log('Opening chatbot for Marketing Automation');
+  };
+
+  const handleRequestDemo = () => {
+    console.log('Requesting demo for Marketing Automation');
+  };
+
+  const handleContactSales = () => {
+    console.log('Contacting sales for Marketing Automation');
+  };
+
+  const handleTakeTour = () => {
+    console.log('Taking tour for Marketing Automation');
+  };
+
+  const handleBrowseTours = () => {
+    console.log('Browsing product tours');
+  };
+
+  const handleReadDatasheet = () => {
+    console.log('Reading Marketing Automation datasheet');
+  };
+
+  // Hero configuration
+  const heroProps = {
+    title: "AI-Powered Marketing Automation",
+    description: [
+      'Our complete <span class="text-blue-600 font-medium">AI-powered marketing automation</span> solution with embedded <span class="text-blue-600 font-medium">artificial intelligence</span> brings consistent processes and a single source of truth across your entire marketing organization—from campaign management and lead nurturing to customer journeys and conversion optimization.',
+      'The application helps you improve your marketing ROI, increase your campaign effectiveness, and engage customers more intelligently than ever before.'
+    ],
+    videoTitle: "What is the AI Augments Marketing Automation Suite?",
+    videoDuration: "3:05",
+    dashboardColor: {
+      primary: "bg-gradient-to-br from-orange-50 via-white to-purple-50",
+      secondary: "bg-orange-100",
+      accent: "bg-purple-100"
+    },
+    dashboardMetrics: {
+      metric1: { label: "Campaigns", color: "bg-orange-100" },
+      metric2: { label: "Leads", color: "bg-purple-100" },
+      metric3: { label: "ROI", color: "bg-green-100" }
+    },
+    centralFigureColor: "bg-gradient-to-b from-orange-400 to-orange-600",
+    bottomGradient: "bg-gradient-to-r from-orange-100 via-purple-100 to-green-100",
+    featureShowcases: {
+      feature1: { label: "AI Campaigns", color: "bg-gradient-to-br from-orange-200 to-orange-400" },
+      feature2: { label: "Lead Scoring", color: "bg-gradient-to-br from-purple-200 to-purple-400" },
+      feature3: { label: "Journey Mapping", color: "bg-gradient-to-br from-green-200 to-green-400" },
+      feature4: { label: "ROI Analytics", color: "bg-gradient-to-br from-blue-200 to-blue-400" }
+    }
+  };
+
+  // Related products
+  const relatedProducts = [
+    {
+      title: "AI Augments CRM & Sales",
+      subtitle: "Sales pipeline integration",
+      description: "Seamlessly connect marketing campaigns with sales pipeline for better lead qualification and conversion tracking.",
+      actionText: "See CRM integration",
+      onAction: () => router.push('/app/crm')
+    },
+    {
+      title: "AI Augments Social Media Manager",
+      subtitle: "Social media automation",
+      description: "Extend your marketing reach with integrated social media campaigns and engagement tracking.",
+      actionText: "See social media details",
+      onAction: () => router.push('/app/social-media-manager')
+    },
+    {
+      title: "AI Augments Customer Support",
+      subtitle: "Customer engagement",
+      description: "Create cohesive customer experiences from marketing touchpoints to support interactions.",
+      actionText: "See support integration",
+      onAction: () => router.push('/app/customer-support')
+    },
+    {
+      title: "AI Augments Digital Signature",
+      subtitle: "Contract automation",
+      description: "Automate marketing agreement signing and vendor contract management processes.",
+      actionText: "See signature details",
+      onAction: () => router.push('/app/digital-signature')
+    }
+  ];
+
+  // Benefits
+  const benefits = [
+    {
+      title: "Increase marketing ROI by 300%",
+      description: "Optimize campaign performance with AI-driven insights that identify the most effective channels, messaging, and timing for maximum return on investment.",
+      actionText: "Learn about ROI optimization (PDF)",
+      actionType: 'pdf' as const,
+      onAction: () => console.log('Download ROI optimization PDF')
+    },
+    {
+      title: "Automate lead nurturing at scale",
+      description: "Create personalized customer journeys that adapt in real-time based on behavior, preferences, and engagement patterns to maximize conversion rates.",
+      actionText: "See lead nurturing demo",
+      actionType: 'tour' as const,
+      onAction: () => console.log('Lead nurturing demo')
+    },
+    {
+      title: "Reduce manual campaign work by 80%",
+      description: "Eliminate repetitive tasks with intelligent automation that handles campaign execution, A/B testing, and performance optimization automatically.",
+      actionText: "Explore automation features",
+      actionType: 'link' as const,
+      onAction: () => console.log('Automation features')
+    }
+  ];
+
+  // Customer story
+  const customerStory = {
+    title: "GrowthTech increases lead conversion by 250% with AI-powered marketing automation",
+    description: "Learn how GrowthTech transformed their marketing strategy and improved campaign performance using AI Augments Marketing Automation, resulting in 250% higher lead conversion and 180% revenue growth.",
+    actionText: "Read the GrowthTech story",
+    onAction: () => console.log('Read customer story')
+  };
+
+  // Customer logos
+  const customerLogos = [
+    "GrowthTech", "MarketFlow", "CampaignPro", "LeadGen Max", 
+    "AutoMarket", "ConvertLab", "MarketingAI", "GrowthOps", "CampaignTech"
+  ];
+
+  // Advanced Features Section Data
+  const featureTabs = [
+    { id: 'campaign-automation', title: 'Campaign automation' },
+    { id: 'lead-management', title: 'Lead management' },
+    { id: 'analytics-insights', title: 'Analytics and insights' }
+  ];
+
+  const featureDetails = {
+    'campaign-automation': {
+      title: 'Campaign automation',
+      subtitle: 'Intelligent marketing campaigns that run themselves',
+      description: 'Create sophisticated marketing campaigns that automatically optimize for performance, adjust messaging based on audience response, and scale across multiple channels.',
+      subsections: [
+        {
+          title: 'Multi-channel campaign orchestration',
+          description: 'Coordinate campaigns across email, social media, paid advertising, and content marketing with unified messaging and consistent branding.'
+        }
+      ],
+      actions: [
+        { text: 'Read Campaign Automation guide (PDF)', type: 'link' as const, onAction: () => console.log('Campaign automation PDF') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
+    },
+    'lead-management': {
+      title: 'Lead management',
+      subtitle: 'Intelligent lead scoring and nurturing',
+      description: 'Automatically score, segment, and nurture leads with AI-powered insights that identify the most promising prospects and personalize their journey.',
+      subsections: [
+        {
+          title: 'Predictive lead scoring',
+          description: 'Use machine learning algorithms to score leads based on behavior, demographics, and engagement patterns for better sales handoff.'
+        }
+      ],
+      actions: [
+        { text: 'Explore lead management tools', type: 'link' as const, onAction: () => console.log('Lead management tools') }
+      ],
+      mockupContent: { type: 'table' as const }
+    },
+    'analytics-insights': {
+      title: 'Analytics and insights',
+      subtitle: 'Data-driven marketing intelligence',
+      description: 'Make informed marketing decisions with comprehensive analytics that reveal campaign performance, customer behavior, and optimization opportunities.',
+      subsections: [
+        {
+          title: 'Real-time performance tracking',
+          description: 'Monitor campaign performance in real-time with customizable dashboards and automated alerts for key performance indicators.'
+        }
+      ],
+      actions: [
+        { text: 'Learn about marketing analytics (PDF)', type: 'link' as const, onAction: () => console.log('Analytics PDF') }
+      ],
+      mockupContent: { type: 'dashboard' as const }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-orange-100 shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <Link href="/dashboard">
-                <Button variant="ghost" size="sm" className="text-orange-600 hover:text-orange-700">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </div>
-            
-            {props.hasAccess && (
-              <Button onClick={handleLaunch} className="bg-orange-600 hover:bg-orange-700 text-white">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Launch Automation
-              </Button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-20">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-600/5 to-amber-600/5"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <div className="p-3 bg-orange-600 rounded-2xl">
-                <Zap className="h-8 w-8 text-white" />
-              </div>
-              <div className="flex space-x-2">
-                <Badge className="bg-orange-100 text-orange-700 border-orange-200">
-                  <Star className="w-3 h-3 mr-1" />
-                  Popular
-                </Badge>
-                <Badge className="bg-purple-100 text-purple-700 border-purple-200">
-                  <Crown className="w-3 h-3 mr-1" />
-                  Professional
-                </Badge>
-                <Badge className="bg-green-100 text-green-700 border-green-200">
-                  <CheckCircle className="w-3 h-3 mr-1" />
-                  Ready
-                </Badge>
-              </div>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Marketing Automation <span className="text-orange-600">Hub</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Automate your marketing with intelligent campaigns, lead nurturing, and customer journey mapping. 
-              Scale your marketing efforts while improving conversion rates.
-            </p>
-
-            <div className="flex items-center justify-center space-x-1 mb-8">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-              ))}
-              <span className="ml-2 text-gray-600 font-medium">4.5/5 from 1,847 marketers</span>
-            </div>
-
-            {/* Access Status */}
-            {!props.hasAccess ? (
-              <Card className="max-w-md mx-auto border-orange-200 bg-orange-50">
-                <CardContent className="pt-6">
-                  <div className="text-center">
-                    <Crown className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-                    <h3 className="font-semibold text-orange-900 mb-2">Professional Plan Required</h3>
-                    <p className="text-sm text-orange-700 mb-4">
-                      This advanced marketing automation requires a Professional plan for AI-powered features.
-                    </p>
-                    <Link href="/pricing">
-                      <Button className="bg-orange-600 hover:bg-orange-700 w-full">
-                        Upgrade to Professional
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="flex justify-center space-x-4">
-                <Button onClick={handleLaunch} size="lg" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3">
-                  <Rocket className="h-5 w-5 mr-2" />
-                  Launch Automation Hub
-                </Button>
-                <Button variant="outline" size="lg" className="border-orange-200 text-orange-700 hover:bg-orange-50 px-8 py-3">
-                  <Calendar className="h-5 w-5 mr-2" />
-                  Schedule Demo
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ROI Metrics */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Proven Marketing Results</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-600 mb-2">127%</div>
-              <div className="text-gray-600">Increase in Qualified Leads</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">68%</div>
-              <div className="text-gray-600">Higher Email Open Rates</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">35%</div>
-              <div className="text-gray-600">Faster Sales Cycle</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">5x</div>
-              <div className="text-gray-600">Marketing ROI Improvement</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Intelligent <span className="text-orange-600">Marketing Automation</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Create sophisticated marketing campaigns with AI-powered automation that adapts to customer behavior and maximizes conversions.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Target,
-                title: "Campaign Management",
-                description: "Design and execute multi-channel marketing campaigns with advanced targeting and personalization capabilities.",
-                color: "orange"
-              },
-              {
-                icon: Brain,
-                title: "AI Lead Scoring",
-                description: "Machine learning algorithms automatically score and prioritize leads based on behavior and engagement patterns.",
-                color: "purple"
-              },
-              {
-                icon: Mail,
-                title: "Email Automation",
-                description: "Sophisticated drip campaigns with behavioral triggers, dynamic content, and A/B testing optimization.",
-                color: "blue"
-              },
-              {
-                icon: Users,
-                title: "Customer Journeys",
-                description: "Visual workflow builder for complex customer paths with conditional logic and real-time personalization.",
-                color: "green"
-              },
-              {
-                icon: BarChart3,
-                title: "Advanced Analytics",
-                description: "Real-time campaign performance tracking with attribution modeling and ROI analysis across all channels.",
-                color: "indigo"
-              },
-              {
-                icon: MessageSquare,
-                title: "Social Media Automation",
-                description: "Schedule posts, monitor engagement, and automate social media responses across multiple platforms.",
-                color: "pink"
-              }
-            ].map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-sm">
-                <CardContent className="p-6">
-                  <div className={`p-3 bg-${feature.color}-100 rounded-lg w-fit mb-4`}>
-                    <feature.icon className={`h-6 w-6 text-${feature.color}-600`} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* AI Features */}
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-amber-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">Powered by Artificial Intelligence</h2>
-            <p className="text-xl text-orange-100">Let AI optimize your marketing campaigns automatically</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center text-white">
-              <div className="p-4 bg-white/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Brain className="h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Predictive Analytics</h3>
-              <p className="text-orange-100">AI predicts customer behavior and optimizes campaign timing for maximum impact</p>
-            </div>
-            <div className="text-center text-white">
-              <div className="p-4 bg-white/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Target className="h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Smart Segmentation</h3>
-              <p className="text-orange-100">Automatically segment audiences based on behavior, preferences, and engagement</p>
-            </div>
-            <div className="text-center text-white">
-              <div className="p-4 bg-white/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <TrendingUp className="h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Performance Optimization</h3>
-              <p className="text-orange-100">Continuous optimization of campaigns for better conversion rates and ROI</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Integration Showcase */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-semibold text-gray-900 mb-8">
-            Integrates with Your Favorite Tools
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-8 opacity-60">
-            {['Salesforce', 'HubSpot', 'Mailchimp', 'Slack', 'Zapier', 'Google Ads'].map((tool, index) => (
-              <div key={index} className="text-gray-500 font-medium text-lg">
-                {tool}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Scale Your Marketing?
-          </h2>
-          <p className="text-xl text-orange-100 mb-8">
-            Join leading companies who've transformed their marketing with intelligent automation.
-          </p>
-          
-          {props.hasAccess ? (
-            <div className="flex justify-center space-x-4">
-              <Button onClick={handleLaunch} size="lg" className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3">
-                <Rocket className="h-5 w-5 mr-2" />
-                Launch Automation Hub
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <Link href="/pricing">
-                <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3">
-                  Get Professional Plan
-                </Button>
-              </Link>
-              <p className="text-orange-100 text-sm">
-                14-day free trial • AI-powered features • Cancel anytime
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="text-gray-400">
-              <p>&copy; 2025 Marketing Automation Hub. Part of Augment Dashboard.</p>
-            </div>
-            <div className="flex space-x-6">
-              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white" asChild>
-                <a href="https://github.com/backink/Marketing-automation" target="_blank" rel="noopener noreferrer">
-                  <Globe className="h-4 w-4 mr-2" />
-                  GitHub
-                </a>
-              </Button>
-              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Support
-              </Button>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <CompleteAppLanding
+      appName="Marketing Automation"
+      hero={heroProps}
+      includeGetStarted={true}
+      includeBenefits={true}
+      includeCustomerSuccess={true}
+      includeRelatedProducts={true}
+      includeAdvancedFeatures={true}
+      includeFinalCTA={true}
+      relatedProducts={relatedProducts}
+      benefits={benefits}
+      customerStory={customerStory}
+      customerLogos={customerLogos}
+      advancedFeaturesTitle="AI Augments Marketing Automation features"
+      advancedFeaturesDescription="Transform your marketing strategy with intelligent automation that optimizes campaigns, nurtures leads, and delivers measurable ROI through data-driven insights."
+      featureTabs={featureTabs}
+      featureDetails={featureDetails}
+      finalCTAText="See how AI Augments Marketing Automation transforms your marketing strategy."
+      onChatWithBot={handleChatWithBot}
+      onRequestDemo={handleRequestDemo}
+      onContactSales={handleContactSales}
+      onTakeTour={handleTakeTour}
+      onBrowseTours={handleBrowseTours}
+      onReadDatasheet={handleReadDatasheet}
+    />
   );
 }
