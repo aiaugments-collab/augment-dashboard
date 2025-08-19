@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
   TrendingUp, Users, FileSignature, Zap, MessageSquare, Share2, Calendar,
-  ArrowRight, Star, CheckCircle, Crown, ExternalLink, DollarSign, Cog, Building
+  ArrowRight, Star, CheckCircle, Crown, ExternalLink, DollarSign, Cog, Building, Server
 } from 'lucide-react';
 
 export function AppsShowcaseSection() {
@@ -89,6 +89,24 @@ export function AppsShowcaseSection() {
         { name: "ERP Business Suite", slug: "erpnext-business-suite", description: "Complete enterprise resource planning" },
         { name: "Supply Chain", slug: "supply-chain", description: "End-to-end supply chain management" },
         { name: "Business Intelligence", slug: "business-intelligence", description: "Advanced analytics and insights" }
+      ]
+    },
+    {
+      title: "Enterprise Solution Areas",
+      description: "Complete enterprise technology stack covering healthcare, ERP, databases, cloud infrastructure and more",
+      icon: Server,
+      color: "bg-indigo-600",
+      bgColor: "bg-indigo-50",
+      borderColor: "border-indigo-200",
+      apps: [
+        { name: "Healthcare & EHR Systems", slug: "healthcare-ehr", description: "Electronic health records and clinical solutions" },
+        { name: "ERP & HCM Solutions", slug: "erp-hcm", description: "Enterprise resource planning and human capital management" },
+        { name: "Database Management", slug: "database-solutions", description: "Database administration and management tools" },
+        { name: "Cloud Infrastructure", slug: "cloud-infrastructure", description: "Cloud platform and infrastructure services" },
+        { name: "Analytics & Business Intelligence", slug: "analytics-bi", description: "Data analytics and business intelligence platforms" },
+        { name: "Security & Identity Management", slug: "security-identity", description: "Identity management and security solutions" },
+        { name: "AI/ML Platforms", slug: "ai-ml-platforms", description: "Artificial intelligence and machine learning tools" },
+        { name: "Communications Systems", slug: "communications", description: "Enterprise communication and collaboration tools" }
       ]
     }
   ];
