@@ -12,14 +12,7 @@ const nextConfig: NextConfig = {
     ppr: true,
     clientSegmentCache: true,
     nodeMiddleware: true
-  },
-  // Fix for Vercel deployment issues
-  output: 'standalone',
-  swcMinify: true,
-  // Ensure proper handling of dynamic routes
-  trailingSlash: false,
-  // Handle build optimization
-  generateEtags: false
+  }
 };
 
 export default nextConfig;
