@@ -8,7 +8,8 @@
     "db:seed": "npx tsx lib/db/seed.ts",
     "type-check": "tsc --noEmit",
     "lint": "tsc --noEmit && echo 'No TypeScript errors found!'",
-    "install:legacy": "npm install --legacy-peer-deps"
+    "install:legacy": "npm install --legacy-peer-deps",
+    "postinstall": "echo 'Dependencies installed successfully'"
   },
   "dependencies": {
     "@stackframe/stack": "^2.8.28",
