@@ -70,9 +70,9 @@ export interface AppModule {
 
 // Props passed to app landing pages
 export interface AppModuleProps {
-  user: AppUser;
+  user: AppUser | null;
   hasAccess: boolean;
-  accessReason?: 'free' | 'included_in_plan' | 'plan_level_access' | 'upgrade_required' | 'subscription_expired';
+  accessReason?: 'free' | 'included_in_plan' | 'plan_level_access' | 'upgrade_required' | 'subscription_expired' | 'login_required';
   upgradeUrl?: string;
   requiredPlanLevel?: number;
   userPlanLevel?: number;

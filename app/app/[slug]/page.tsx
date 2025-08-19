@@ -98,18 +98,6 @@ export default async function AppPage({ params, searchParams }: AppPageProps) {
   // Initialize app registry
   initializeAppRegistry();
   
-  // Check if user is authenticated
-  const session = await getSession();
-  if (!session?.user) {
-    redirect('/login');
-  }
-
-  // Get user details
-  const user = await getUserById(session.user.id.toString());
-  if (!user) {
-    redirect('/login');
-  }
-
   // Check if app exists and is available
   if (!isAppAvailable(slug)) {
     notFound();
@@ -121,25 +109,52 @@ export default async function AppPage({ params, searchParams }: AppPageProps) {
     notFound();
   }
 
-  // Get access information
-  const accessInfo = await getAppAccessInfo(user.id, slug);
-  if (!accessInfo) {
-    notFound();
+  // Check if user is authenticated
+  const session = await getSession();
+  let appUser = null;
+  let accessInfo = null;
+
+  if (session?.user) {
+    // Get user details
+    const user = await getUserById(session.user.id.toString());
+    if (user) {
+      // Get access information for authenticated users
+      accessInfo = await getAppAccessInfo(user.id, slug);
+      
+      if (accessInfo) {
+        // Prepare user context
+        appUser = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          planLevel: accessInfo.userPlanLevel || 0,
+          subscription: user.currentPlanId ? {
+            planId: user.currentPlanId,
+            status: user.subscriptionStatus || 'unknown',
+          } : undefined
+        };
+      }
+    }
   }
 
-  // Prepare user context
-  const appUser = {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    planLevel: accessInfo.userPlanLevel || 0,
-    subscription: user.currentPlanId ? {
-      planId: user.currentPlanId,
-      status: user.subscriptionStatus || 'unknown',
-    } : undefined
-  };
+  // For non-authenticated users, show landing page without access
+  if (!appUser || !accessInfo) {
+    const appProps: AppModuleProps = {
+      user: null,
+      hasAccess: false,
+      accessReason: 'login_required' as const,
+      upgradeUrl: '/login',
+      requiredPlanLevel: appEntry.module.accessRequirements.minimumPlanLevel || 0,
+      userPlanLevel: 0
+    };
 
-  // Prepare props for the app landing page
+    // Render the app's landing page component
+    const LandingPageComponent = appEntry.module.landingPage;
+    
+    return <LandingPageComponent {...appProps} />;
+  }
+
+  // Prepare props for authenticated users
   const appProps: AppModuleProps = {
     user: appUser,
     hasAccess: accessInfo.hasAccess,

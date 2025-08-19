@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // For public routes, allow access
-  const publicRoutes = ['/login', '/', '/auth', '/landing'];
+  const publicRoutes = ['/login', '/', '/auth', '/landing', '/app'];
   if (publicRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
     return NextResponse.next();
   }
