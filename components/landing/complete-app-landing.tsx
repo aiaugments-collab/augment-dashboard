@@ -3,6 +3,13 @@
 import React from 'react';
 import AiAugmentsHeader from './aiaugments-header';
 import AiAugmentsAppHero from './aiaugments-app-hero';
+import CTABanner from './cta-banner';
+import AppContentCards from './app-content-cards';
+import ProductTour from './product-tour';
+import CustomerLogos from './customer-logos';
+import FeaturedArticle from './featured-article';
+import CustomerVideo from './customer-video';
+import UseCases from './use-cases';
 import GetStartedSection from './get-started-section';
 import RelatedProductsSection from './related-products-section';
 import BenefitsSection from './benefits-section';
@@ -87,6 +94,38 @@ interface ResourceItem {
   onAction?: () => void;
 }
 
+interface ContentCard {
+  title: string;
+  description: string;
+  actionText: string;
+  actionType: 'primary' | 'secondary';
+  onAction?: () => void;
+  image?: string;
+}
+
+interface TourSlide {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}
+
+interface CustomerLogo {
+  name: string;
+  logo: string;
+  link?: string;
+  alt: string;
+}
+
+interface UseCase {
+  title: string;
+  description: string;
+  actionText: string;
+  actionLink?: string;
+  onAction?: () => void;
+}
+
 interface CompleteAppLandingProps {
   appName: string;
   
@@ -95,6 +134,13 @@ interface CompleteAppLandingProps {
   
   // Optional sections - include if you want them
   includeHeader?: boolean;
+  includeCTABanner?: boolean;
+  includeContentCards?: boolean;
+  includeProductTour?: boolean;
+  includeCustomerLogos?: boolean;
+  includeFeaturedArticle?: boolean;
+  includeCustomerVideo?: boolean;
+  includeUseCases?: boolean;
   includeGetStarted?: boolean;
   includeRelatedProducts?: boolean;
   includeBenefits?: boolean;
@@ -104,6 +150,38 @@ interface CompleteAppLandingProps {
   includeFinalCTA?: boolean;
   
   // Section Data
+  ctaBanner?: {
+    title: string;
+    primaryButton: { text: string; onClick?: () => void; };
+    secondaryButton: { text: string; onClick?: () => void; };
+  };
+  contentCards?: ContentCard[];
+  tourSlides?: TourSlide[];
+  customerLogosData?: {
+    title: string;
+    description: string;
+    logos: CustomerLogo[];
+  };
+  featuredArticle?: {
+    title: string;
+    quote: string;
+    source: string;
+    image?: string;
+    imageAlt?: string;
+    actionText: string;
+    actionLink: string;
+  };
+  customerVideo?: {
+    title: string;
+    videoId: string;
+    thumbnail: string;
+    duration: string;
+    onPlayVideo?: (videoId: string) => void;
+  };
+  useCasesData?: {
+    title: string;
+    useCases: UseCase[];
+  };
   relatedProducts?: RelatedProduct[];
   benefits?: Benefit[];
   customerStory?: {
@@ -136,6 +214,13 @@ const CompleteAppLanding: React.FC<CompleteAppLandingProps> = ({
   appName,
   hero,
   includeHeader = true,
+  includeCTABanner = false,
+  includeContentCards = false,
+  includeProductTour = false,
+  includeCustomerLogos = false,
+  includeFeaturedArticle = false,
+  includeCustomerVideo = false,
+  includeUseCases = false,
   includeGetStarted = true,
   includeRelatedProducts = false,
   includeBenefits = false,
@@ -143,6 +228,13 @@ const CompleteAppLanding: React.FC<CompleteAppLandingProps> = ({
   includeResources = false,
   includeAdvancedFeatures = false,
   includeFinalCTA = true,
+  ctaBanner,
+  contentCards = [],
+  tourSlides = [],
+  customerLogosData,
+  featuredArticle,
+  customerVideo,
+  useCasesData,
   relatedProducts = [],
   benefits = [],
   customerStory,
@@ -172,7 +264,24 @@ const CompleteAppLanding: React.FC<CompleteAppLandingProps> = ({
         onRequestDemo={onRequestDemo}
       />
       
-      {/* Advanced Features Section - Right after hero for education */}
+      {/* CTA Banner Section - Right after hero */}
+      {includeCTABanner && ctaBanner && (
+        <CTABanner
+          title={ctaBanner.title}
+          primaryButton={ctaBanner.primaryButton}
+          secondaryButton={ctaBanner.secondaryButton}
+        />
+      )}
+      
+      {/* Content Cards Section */}
+      {includeContentCards && contentCards.length > 0 && (
+        <AppContentCards
+          appName={appName}
+          cards={contentCards}
+        />
+      )}
+      
+      {/* Advanced Features Section */}
       {includeAdvancedFeatures && featureTabs.length > 0 && (
         <AdvancedDetailedFeaturesSection
           appName={appName}
@@ -180,6 +289,56 @@ const CompleteAppLanding: React.FC<CompleteAppLandingProps> = ({
           sectionDescription={advancedFeaturesDescription || `Explore the powerful features of ${appName}.`}
           featureTabs={featureTabs}
           featureDetails={featureDetails}
+        />
+      )}
+      
+      {/* Product Tour Section */}
+      {includeProductTour && tourSlides.length > 0 && (
+        <ProductTour
+          appName={appName}
+          slides={tourSlides}
+          onRequestDemo={onRequestDemo}
+        />
+      )}
+      
+      {/* Customer Logos Section */}
+      {includeCustomerLogos && customerLogosData && (
+        <CustomerLogos
+          title={customerLogosData.title}
+          description={customerLogosData.description}
+          logos={customerLogosData.logos}
+        />
+      )}
+      
+      {/* Featured Article Section */}
+      {includeFeaturedArticle && featuredArticle && (
+        <FeaturedArticle
+          title={featuredArticle.title}
+          quote={featuredArticle.quote}
+          source={featuredArticle.source}
+          image={featuredArticle.image}
+          imageAlt={featuredArticle.imageAlt}
+          actionText={featuredArticle.actionText}
+          actionLink={featuredArticle.actionLink}
+        />
+      )}
+      
+      {/* Customer Video Section */}
+      {includeCustomerVideo && customerVideo && (
+        <CustomerVideo
+          title={customerVideo.title}
+          videoId={customerVideo.videoId}
+          thumbnail={customerVideo.thumbnail}
+          duration={customerVideo.duration}
+          onPlayVideo={customerVideo.onPlayVideo}
+        />
+      )}
+      
+      {/* Use Cases Section */}
+      {includeUseCases && useCasesData && (
+        <UseCases
+          title={useCasesData.title}
+          useCases={useCasesData.useCases}
         />
       )}
       

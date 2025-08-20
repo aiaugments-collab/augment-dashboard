@@ -10,7 +10,7 @@ export function ProblemSolutionSection() {
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Most businesses waste time and money managing dozens of disconnected tools. 
-            Our AI platform brings everything together.
+            Our AI AUGMENTS brings everything together.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export function ProblemSolutionSection() {
             <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-xl p-8">
               <h3 className="text-xl font-bold text-green-700 dark:text-green-400 mb-6 flex items-center">
                 <CheckCircle className="mr-3 h-6 w-6" />
-                The AI Platform Way
+                The AI AUGMENTS Way
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
@@ -107,7 +107,7 @@ export function ProblemSolutionSection() {
               Save 60% on Tool Costs + 20 Hours/Week
             </h3>
             <p className="text-muted-foreground mb-6">
-              Join 1000+ businesses that switched to our all-in-one AI platform
+              Join 1000+ businesses that switched to our all-in-one AI AUGMENTS
             </p>
             <div className="flex items-center justify-center space-x-8 text-sm text-muted-foreground">
               <div className="text-center">

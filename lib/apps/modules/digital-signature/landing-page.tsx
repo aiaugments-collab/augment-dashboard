@@ -136,6 +136,123 @@ export function DigitalSignatureLandingPage(props: AppModuleProps) {
     "SignatureMax", "LegalFlow", "ContractTech", "DocSmart", "SignEase"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Accelerate your document workflows with secure digital signatures",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Electronic Signatures & Workflows",
+      description: "Create, send, and manage electronic signatures with enterprise-grade security and compliance that meets global legal standards.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Document Management & Templates",
+      description: "Centralized document storage with version control, template management, and intelligent organization for all your signature workflows.",
+      actionText: "Explore documents",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Legal Compliance & Security",
+      description: "Ensure your documents meet the highest security standards and legal requirements with comprehensive audit trails and compliance features.",
+      actionText: "View compliance",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver secure signature results from start to finish",
+      description: "AI Augments Digital Signature helps you streamline document workflows by connecting the right signature tools to the right processes, support your compliance goals with clear audit tracking, and quickly adapt to changing legal requirements.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Digital Signature Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage document signing workflows",
+      description: "Regardless of your document complexity, you can easily use the intuitive interface to create signature workflows, manage templates, and track document status with automated notifications.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Document Workflow Interface"
+    },
+    {
+      id: 3,
+      title: "Match signature requirements to legal standards",
+      description: "The intelligent compliance engine helps you ensure legal validity by analyzing document types, signature requirements, and regulatory compliance automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Compliance Management Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by document-driven organizations worldwide",
+    description: "Join thousands of companies that rely on our signature platform",
+    logos: [
+      { name: "LegalTech", logo: "", alt: "LegalTech logo" }, // Will use CSS mockup
+      { name: "SignaturePro", logo: "", alt: "SignaturePro logo" },
+      { name: "ContractFlow", logo: "", alt: "ContractFlow logo" },
+      { name: "DocuSafe", logo: "", alt: "DocuSafe logo" },
+      { name: "SignatureMax", logo: "", alt: "SignatureMax logo" },
+      { name: "LegalFlow", logo: "", alt: "LegalFlow logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Document Signing: AI-Enhanced Digital Workflows",
+    quote: "Organizations using AI-powered digital signature solutions see 85% faster document processing and 70% reduction in administrative costs through automated workflows and compliance management.",
+    source: "Digital Transformation Research Institute",
+    image: "",
+    imageAlt: "Digital Signature Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "LegalTech Corp reduced contract processing time by 80% with AI-powered signature workflows",
+    videoId: "digital-signature-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "3:50",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Digital Signature use cases",
+    useCases: [
+      {
+        title: "Legal & Contract Management",
+        description: "Streamline legal document signing with secure workflows, multi-party signatures, and comprehensive audit trails for contract management.",
+        actionText: "Explore legal solutions"
+      },
+      {
+        title: "HR & Employee Documents",
+        description: "Digitize HR processes with electronic signatures for employment contracts, policy acknowledgments, and employee onboarding documents.",
+        actionText: "View HR solutions"
+      },
+      {
+        title: "Sales & Customer Agreements",
+        description: "Accelerate sales cycles with fast, secure signature collection for proposals, contracts, and customer agreements.",
+        actionText: "Learn about sales integration"
+      }
+    ]
+  };
+
   // Advanced Features Section Data
   const featureTabs = [
     { id: 'e-signatures', title: 'Electronic signatures' },
@@ -201,6 +318,22 @@ export function DigitalSignatureLandingPage(props: AppModuleProps) {
       includeRelatedProducts={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       relatedProducts={relatedProducts}
       benefits={benefits}
       customerStory={customerStory}

@@ -1,4 +1,4 @@
-# 🤖 Agent Rules for AI Platform Development
+# 🤖 Agent Rules for AI AUGMENTS Development
 
 ## 🎯 PROJECT MISSION
 Build a **minimal, functional Zoho-like platform** with AI agents in **2 months**. Focus on core functionality, not perfection.

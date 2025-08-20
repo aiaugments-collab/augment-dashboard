@@ -136,6 +136,123 @@ export function MarketingAutomationLandingPage(props: AppModuleProps) {
     "AutoMarket", "ConvertLab", "MarketingAI", "GrowthOps", "CampaignTech"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Transform your marketing strategy with AI-powered automation",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Campaign Automation & Orchestration",
+      description: "Create sophisticated multi-channel campaigns that automatically optimize for performance and adapt messaging based on customer behavior and engagement patterns.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Lead Scoring & Nurturing",
+      description: "Automatically score and nurture leads with AI-powered insights that identify the most promising prospects and personalize their customer journey.",
+      actionText: "Explore lead management",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Marketing Analytics & ROI",
+      description: "Track campaign performance and marketing ROI with comprehensive analytics, attribution modeling, and predictive insights for optimization.",
+      actionText: "View analytics",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver exceptional marketing results from start to finish",
+      description: "AI Augments Marketing Automation helps you create and execute marketing campaigns by connecting the right messaging to the right audiences, support your growth goals with clear performance tracking, and quickly adapt to changing market conditions.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Marketing Automation Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly create and manage campaigns",
+      description: "Regardless of your marketing expertise, you can easily use the intuitive campaign builder to create multi-channel campaigns with automated workflows and personalized customer journeys.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Campaign Builder Interface"
+    },
+    {
+      id: 3,
+      title: "Match marketing strategies to customer needs",
+      description: "The intelligent marketing engine helps you deliver the right message at the right time by analyzing customer behavior, preferences, and engagement patterns automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Marketing Intelligence Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by growth-focused organizations worldwide",
+    description: "Join thousands of companies that rely on our marketing automation platform",
+    logos: [
+      { name: "GrowthTech", logo: "", alt: "GrowthTech logo" }, // Will use CSS mockup
+      { name: "MarketFlow", logo: "", alt: "MarketFlow logo" },
+      { name: "CampaignPro", logo: "", alt: "CampaignPro logo" },
+      { name: "LeadGen Max", logo: "", alt: "LeadGen Max logo" },
+      { name: "AutoMarket", logo: "", alt: "AutoMarket logo" },
+      { name: "ConvertLab", logo: "", alt: "ConvertLab logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Marketing: AI-Driven Customer Journey Optimization",
+    quote: "Organizations using AI-powered marketing automation see 250% improvement in lead conversion rates and 180% increase in marketing ROI through personalized customer experiences.",
+    source: "Marketing Technology Research Institute",
+    image: "",
+    imageAlt: "Marketing Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "GrowthTech increased lead conversion by 250% with AI-powered marketing automation",
+    videoId: "marketing-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "4:15",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Marketing Automation use cases",
+    useCases: [
+      {
+        title: "B2B Lead Generation",
+        description: "Generate and nurture B2B leads with targeted campaigns, lead scoring, and automated follow-up sequences that convert prospects into customers.",
+        actionText: "Explore B2B marketing"
+      },
+      {
+        title: "E-commerce Marketing",
+        description: "Drive online sales with personalized product recommendations, abandoned cart recovery, and customer lifecycle marketing campaigns.",
+        actionText: "View e-commerce solutions"
+      },
+      {
+        title: "Customer Retention",
+        description: "Increase customer lifetime value with retention campaigns, loyalty programs, and personalized re-engagement strategies.",
+        actionText: "Learn about retention"
+      }
+    ]
+  };
+
   // Advanced Features Section Data
   const featureTabs = [
     { id: 'campaign-automation', title: 'Campaign automation' },
@@ -201,6 +318,22 @@ export function MarketingAutomationLandingPage(props: AppModuleProps) {
       includeRelatedProducts={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       relatedProducts={relatedProducts}
       benefits={benefits}
       customerStory={customerStory}

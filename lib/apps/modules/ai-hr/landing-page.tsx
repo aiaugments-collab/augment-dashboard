@@ -113,6 +113,128 @@ export function AIHRLandingPage(props: AppModuleProps) {
     "TalentAI", "WorkforceIQ", "HRIntelligence", "TalentOptim", "SmartTalent"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Exceed talent expectations with AI-powered HR that delivers results on time and on budget.",
+    primaryButton: {
+      text: "Watch a demo",
+      onClick: () => console.log('Watch demo')
+    },
+    secondaryButton: {
+      text: "Take the tour",
+      onClick: () => console.log('Take tour')
+    }
+  };
+
+  // Content Cards - Oracle style articles
+  const contentCards = [
+    {
+      title: "AI agents: How CHROs will automate almost every HR process",
+      description: "See how embedded AI agents power touchless HR operations so you can boost efficiency, improve employee experience, and lead with data-driven insights.",
+      actionText: "Read the article",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Read AI agents article')
+    },
+    {
+      title: "The future of work: AI-driven talent management strategies",
+      description: "Discover how AI-powered HR solutions are transforming talent acquisition, employee development, and workforce planning for the modern enterprise.",
+      actionText: "Access the research",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Access research')
+    },
+    {
+      title: "Predictive analytics in HR: Building tomorrow's workforce today",
+      description: "Learn how predictive HR analytics help organizations anticipate talent needs, prevent turnover, and optimize workforce performance.",
+      actionText: "Download whitepaper",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Download whitepaper')
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver intelligent HR results from start to finish",
+      description: "AI Augments Intelligent HR helps you transform talent management by connecting recruitment, performance management, and employee development with AI-powered insights.",
+      image: "", // Will use CSS mockup
+      imageAlt: "AI-HR Dashboard Overview"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage talent with AI intelligence",
+      description: "Regardless of your organization size, you can easily manage recruitment pipelines, employee performance, and workforce analytics with intelligent automation and predictive insights.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Talent Management Interface"
+    },
+    {
+      id: 3,
+      title: "Predict and optimize workforce performance",
+      description: "The advanced AI capability helps you predict employee turnover, identify high performers, and optimize talent allocation based on skills, performance, and career aspirations.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Workforce Analytics"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "AI-Powered HR customer successes",
+    description: "A large and growing community of companies is improving talent management across organizations with connected, intelligent AI-powered HR solutions.",
+    logos: [
+      { name: "TalentTech", logo: "", alt: "TalentTech", link: "#" },
+      { name: "AI Workforce", logo: "", alt: "AI Workforce" },
+      { name: "SmartHire", logo: "", alt: "SmartHire", link: "#" },
+      { name: "PredictiveHR", logo: "", alt: "PredictiveHR" },
+      { name: "TalentAI", logo: "", alt: "TalentAI", link: "#" },
+      { name: "WorkforceIQ", logo: "", alt: "WorkforceIQ" },
+      { name: "HRIntelligence", logo: "", alt: "HRIntelligence" },
+      { name: "TalentOptim", logo: "", alt: "TalentOptim" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "MIT Sloan highlights AI's impact on HR transformation",
+    quote: "AI-powered HR systems provide instant talent insights and help organizations automate recruitment, predict employee performance, and optimize workforce planning via intelligent automation. The AI learns from employee data, performance patterns, and organizational context to enhance human capital decisions.",
+    source: "MIT Sloan Management Review",
+    actionText: "Read the research",
+    actionLink: "https://sloanreview.mit.edu/article/the-future-of-ai-in-hr/"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "TalentTech reduced turnover by 70% and accelerated hiring by 55%",
+    videoId: "ai-hr-video-id",
+    thumbnail: "", // Will use CSS mockup
+    duration: "2:45",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Flexible, powerful AI-HR solutions",
+    useCases: [
+      {
+        title: "Talent acquisition optimization",
+        description: "Accelerate hiring processes and improve candidate quality with AI-powered screening, matching, and predictive analytics.",
+        actionText: "Watch how TalentTech optimized recruitment (2:45)",
+        onAction: () => console.log('Watch TalentTech video')
+      },
+      {
+        title: "Employee retention strategies",
+        description: "Predict and prevent employee turnover with advanced analytics that identify at-risk employees and recommend retention actions.",
+        actionText: "See retention success stories",
+        actionLink: "#"
+      },
+      {
+        title: "Performance management",
+        description: "Enhance employee performance with AI-driven insights, personalized development plans, and continuous feedback systems.",
+        actionText: "Read the performance management guide (PDF)",
+        actionLink: "#"
+      }
+    ]
+  };
+
   const featureTabs = [
     { id: 'predictive-analytics', title: 'Predictive HR analytics' },
     { id: 'ai-recruitment', title: 'AI-powered recruitment' },
@@ -198,12 +320,26 @@ export function AIHRLandingPage(props: AppModuleProps) {
     <CompleteAppLanding
       appName="Intelligent Human Resources"
       hero={heroProps}
+      includeCTABanner={true}
+      includeContentCards={true}
+      includeAdvancedFeatures={true}
+      includeProductTour={true}
+      includeCustomerLogos={true}
+      includeFeaturedArticle={true}
+      includeCustomerVideo={true}
+      includeUseCases={true}
       includeGetStarted={true}
       includeBenefits={true}
       includeCustomerSuccess={true}
       includeRelatedProducts={true}
-      includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      ctaBanner={ctaBanner}
+      contentCards={contentCards}
+      tourSlides={tourSlides}
+      customerLogosData={customerLogosData}
+      featuredArticle={featuredArticle}
+      customerVideo={customerVideo}
+      useCasesData={useCasesData}
       relatedProducts={relatedProducts}
       benefits={benefits}
       customerStory={customerStory}

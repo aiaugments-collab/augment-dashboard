@@ -57,7 +57,7 @@ export function FooterSection() {
             <div className="lg:col-span-2">
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-foreground mb-2">
-                  AI Platform
+                  AI AUGMENTS
                 </h3>
                 <p className="text-muted-foreground mb-4">
                   The complete business automation platform with 103+ modules 
@@ -178,7 +178,7 @@ export function FooterSection() {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="lg:max-w-xl">
               <h3 className="text-lg font-bold text-foreground mb-2">
-                Stay Updated with AI Platform
+                Stay Updated with AI AUGMENTS
               </h3>
               <p className="text-muted-foreground">
                 Get the latest updates on new features, AI improvements, and business automation tips.
@@ -205,7 +205,7 @@ export function FooterSection() {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="text-center lg:text-left">
               <p className="text-sm text-muted-foreground">
-                © 2025 AI Platform. All rights reserved.
+                © 2025 AI AUGMENTS. All rights reserved.
               </p>
             </div>
             <div className="mt-4 lg:mt-0">

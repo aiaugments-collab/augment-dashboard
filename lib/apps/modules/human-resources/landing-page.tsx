@@ -136,6 +136,123 @@ export function HumanResourcesLandingPage(props: AppModuleProps) {
     "HROptimize", "TalentLab", "HRInnovate", "WorkSmart", "PeopleOps"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Transform your HR operations with AI-powered workforce management",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Employee Lifecycle Management",
+      description: "Streamline every stage of the employee journey from onboarding to offboarding with automated workflows and personalized experiences.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Performance & Talent Management",
+      description: "Drive employee growth with comprehensive performance management, goal tracking, and talent development programs.",
+      actionText: "Explore performance",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Payroll & Benefits Administration",
+      description: "Ensure accurate payroll processing and benefits management with automated calculations and compliance tracking.",
+      actionText: "View payroll",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver exceptional HR results from start to finish",
+      description: "AI Augments HR Management helps you optimize your workforce by connecting the right HR tools to the right processes, support your people goals with clear performance tracking, and quickly adapt to changing workforce needs.",
+      image: "", // Will use CSS mockup
+      imageAlt: "HR Management Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage employee lifecycle processes",
+      description: "Regardless of your HR expertise, you can easily use the intuitive interface to manage onboarding, performance reviews, and employee development with automated workflows.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Employee Management Interface"
+    },
+    {
+      id: 3,
+      title: "Match HR strategies to organizational needs",
+      description: "The intelligent HR engine helps you make data-driven decisions about workforce planning, talent development, and employee engagement by analyzing performance patterns and organizational metrics automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "HR Analytics Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by HR leaders worldwide",
+    description: "Join thousands of organizations that rely on our HR platform",
+    logos: [
+      { name: "HRTech", logo: "", alt: "HRTech logo" }, // Will use CSS mockup
+      { name: "TalentFlow", logo: "", alt: "TalentFlow logo" },
+      { name: "WorkForce Pro", logo: "", alt: "WorkForce Pro logo" },
+      { name: "PeopleFirst", logo: "", alt: "PeopleFirst logo" },
+      { name: "HROptimize", logo: "", alt: "HROptimize logo" },
+      { name: "TalentLab", logo: "", alt: "TalentLab logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of HR: AI-Driven Workforce Management",
+    quote: "Organizations using AI-powered HR management see 50% reduction in hiring time and 30% improvement in employee retention through data-driven workforce strategies.",
+    source: "Human Resources Technology Institute",
+    image: "",
+    imageAlt: "HR Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "HRTech Solutions reduced hiring time by 50% with AI-powered recruitment workflows",
+    videoId: "hr-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "4:05",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "HR Management use cases",
+    useCases: [
+      {
+        title: "Enterprise Workforce Management",
+        description: "Manage large-scale workforces with comprehensive HR tools for employee lifecycle, performance management, and organizational development.",
+        actionText: "Explore enterprise HR"
+      },
+      {
+        title: "Remote Team Management",
+        description: "Support distributed teams with digital onboarding, virtual performance reviews, and remote employee engagement tools.",
+        actionText: "View remote solutions"
+      },
+      {
+        title: "Compliance & Risk Management",
+        description: "Ensure regulatory compliance with automated tracking, policy management, and comprehensive audit trails for HR processes.",
+        actionText: "Learn about compliance"
+      }
+    ]
+  };
+
   // Advanced Features Section Data - simplified for now
   const featureTabs = [
     { id: 'employee-management', title: 'Employee lifecycle management' },
@@ -201,6 +318,22 @@ export function HumanResourcesLandingPage(props: AppModuleProps) {
       includeRelatedProducts={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       relatedProducts={relatedProducts}
       benefits={benefits}
       customerStory={customerStory}

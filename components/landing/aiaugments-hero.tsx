@@ -126,45 +126,6 @@ const AiAugmentsHero = () => {
         </div>
       </div>
 
-      {/* Bottom Image Section */}
-      <div className="relative bg-gradient-to-r from-yellow-100 via-orange-100 to-red-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 py-16">
-            {/* Image placeholders representing different business scenarios */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-blue-200 to-blue-400 relative">
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">Team Collaboration</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-green-200 to-green-400 relative">
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">Data Analytics</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-purple-200 to-purple-400 relative">
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">AI Insights</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-orange-200 to-orange-400 relative">
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">Business Growth</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };

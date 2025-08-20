@@ -106,6 +106,123 @@ export function CustomerSupportLandingPage(props: AppModuleProps) {
     "SupportFlow", "TicketLab", "ServiceAI", "HelpCenter", "SupportOps"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Elevate customer satisfaction with AI-powered support solutions",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Smart Ticketing & Case Management",
+      description: "Automate ticket creation, routing, and escalation with AI-powered classification that ensures the right expert handles each customer issue.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Knowledge Base & Self-Service",
+      description: "Build comprehensive knowledge bases that empower customers to find answers quickly while providing agents with instant access to solutions.",
+      actionText: "Explore knowledge base",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Omnichannel Support & Live Chat",
+      description: "Provide seamless support across email, chat, phone, and social media with unified customer interaction history and context.",
+      actionText: "View omnichannel",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver exceptional support results from start to finish",
+      description: "AI Augments Customer Support helps you resolve customer issues by connecting the right support tools to the right workflows, support your service goals with clear performance tracking, and quickly adapt to changing customer needs.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Customer Support Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage tickets and customer interactions",
+      description: "Regardless of your support team size, you can easily use the unified interface to manage tickets, track customer interactions, and resolve issues with automated workflows and intelligent routing.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Ticket Management Interface"
+    },
+    {
+      id: 3,
+      title: "Match support resources to customer priorities",
+      description: "The intelligent support engine helps you prioritize and route tickets by analyzing customer importance, issue complexity, and agent expertise automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Support Routing Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by customer-focused organizations worldwide",
+    description: "Join thousands of support teams that rely on our platform",
+    logos: [
+      { name: "SupportTech", logo: "", alt: "SupportTech logo" }, // Will use CSS mockup
+      { name: "HelpDesk Pro", logo: "", alt: "HelpDesk Pro logo" },
+      { name: "ServiceMax", logo: "", alt: "ServiceMax logo" },
+      { name: "CustomerFirst", logo: "", alt: "CustomerFirst logo" },
+      { name: "SupportFlow", logo: "", alt: "SupportFlow logo" },
+      { name: "TicketLab", logo: "", alt: "TicketLab logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Customer Support: AI-Enhanced Service Delivery",
+    quote: "Organizations using AI-powered customer support see 75% reduction in response times and 95% customer satisfaction through intelligent automation and personalized service.",
+    source: "Customer Service Excellence Institute",
+    image: "",
+    imageAlt: "Customer Support Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "SupportTech reduced ticket resolution time by 60% with AI-powered automation",
+    videoId: "support-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "3:40",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Customer Support use cases",
+    useCases: [
+      {
+        title: "Enterprise Help Desk",
+        description: "Manage large-scale customer support operations with advanced ticketing, SLA management, and comprehensive reporting capabilities.",
+        actionText: "Explore enterprise support"
+      },
+      {
+        title: "E-commerce Customer Service",
+        description: "Provide specialized support for online retailers with order management integration, return processing, and customer communication tools.",
+        actionText: "View e-commerce solutions"
+      },
+      {
+        title: "Technical Support & IT",
+        description: "Handle technical issues with specialized tools for troubleshooting, remote assistance, and technical knowledge management.",
+        actionText: "Learn about technical support"
+      }
+    ]
+  };
+
   const featureTabs = [
     { id: 'ticketing', title: 'Smart ticketing system' },
     { id: 'knowledge-base', title: 'Knowledge management' }
@@ -154,6 +271,22 @@ export function CustomerSupportLandingPage(props: AppModuleProps) {
       includeRelatedProducts={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       relatedProducts={relatedProducts}
       benefits={benefits}
       customerStory={customerStory}

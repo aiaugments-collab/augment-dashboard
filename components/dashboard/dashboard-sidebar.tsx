@@ -189,7 +189,7 @@ export function DashboardSidebar() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <CircleIcon className="h-6 w-6 text-primary" />
-            <span className="ml-2 text-lg font-semibold text-foreground">AI Platform</span>
+            <span className="ml-2 text-lg font-semibold text-foreground">AI AUGMENTS</span>
           </div>
           
           <DropdownMenu>

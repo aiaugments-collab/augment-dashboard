@@ -84,6 +84,123 @@ export function CalendarSchedulerLandingPage(props: AppModuleProps) {
     onAction: () => console.log('Read customer story')
   };
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Optimize your scheduling with AI-powered calendar management",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Smart Booking & Scheduling",
+      description: "Enable seamless appointment booking with AI-powered availability detection, conflict prevention, and automatic schedule optimization.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Calendar Integration & Sync",
+      description: "Connect with all major calendar platforms for unified scheduling that prevents conflicts and keeps everyone synchronized in real-time.",
+      actionText: "Explore integration",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Automated Reminders & Notifications",
+      description: "Reduce no-shows with intelligent reminder systems and automated notifications that keep everyone informed about upcoming appointments.",
+      actionText: "View reminders",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver optimal scheduling results from start to finish",
+      description: "AI Augments Calendar Scheduler helps you manage appointments by connecting the right scheduling tools to the right workflows, support your time management goals with clear availability tracking, and quickly adapt to changing scheduling needs.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Calendar Scheduler Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage appointments and availability",
+      description: "Regardless of your scheduling complexity, you can easily use the intuitive interface to book appointments, manage availability, and coordinate calendars with automated conflict resolution.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Appointment Management Interface"
+    },
+    {
+      id: 3,
+      title: "Match scheduling preferences to optimal time slots",
+      description: "The intelligent scheduling engine helps you find the best meeting times by analyzing participant availability, preferences, and time zones automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Smart Scheduling Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by scheduling professionals worldwide",
+    description: "Join thousands of professionals that rely on our scheduling platform",
+    logos: [
+      { name: "SchedulePro", logo: "", alt: "SchedulePro logo" }, // Will use CSS mockup
+      { name: "BookingMax", logo: "", alt: "BookingMax logo" },
+      { name: "CalendarFlow", logo: "", alt: "CalendarFlow logo" },
+      { name: "TimeSync", logo: "", alt: "TimeSync logo" },
+      { name: "MeetingPro", logo: "", alt: "MeetingPro logo" },
+      { name: "ScheduleAI", logo: "", alt: "ScheduleAI logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Scheduling: AI-Driven Calendar Management",
+    quote: "Organizations using AI-powered scheduling see 85% improvement in booking efficiency and 70% reduction in scheduling conflicts through intelligent automation.",
+    source: "Productivity Technology Research Institute",
+    image: "",
+    imageAlt: "Scheduling Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "SchedulePro increased booking efficiency by 85% with AI-powered automation",
+    videoId: "calendar-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "3:15",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Calendar & Scheduling use cases",
+    useCases: [
+      {
+        title: "Professional Services",
+        description: "Streamline client appointments, consultations, and service bookings with automated scheduling and client management integration.",
+        actionText: "Explore professional services"
+      },
+      {
+        title: "Healthcare & Medical",
+        description: "Manage patient appointments, provider schedules, and medical consultations with HIPAA-compliant scheduling and reminder systems.",
+        actionText: "View healthcare solutions"
+      },
+      {
+        title: "Education & Training",
+        description: "Coordinate classes, training sessions, and educational appointments with student management and resource scheduling capabilities.",
+        actionText: "Learn about education scheduling"
+      }
+    ]
+  };
+
   const featureTabs = [
     { id: 'smart-booking', title: 'Smart booking system' },
     { id: 'calendar-integration', title: 'Calendar integration' }
@@ -131,6 +248,22 @@ export function CalendarSchedulerLandingPage(props: AppModuleProps) {
       includeCustomerSuccess={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       benefits={benefits}
       customerStory={customerStory}
       advancedFeaturesTitle="AI Augments Calendar & Scheduling features"

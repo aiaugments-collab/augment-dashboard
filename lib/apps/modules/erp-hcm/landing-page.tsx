@@ -136,6 +136,128 @@ export function ERPHCMLandingPage(props: AppModuleProps) {
     "WorkForce Pro", "Enterprise Co", "ProcessMax", "Business Masters", "Operations Plus"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Exceed operational expectations with ERP & HCM that delivers results on time and on budget.",
+    primaryButton: {
+      text: "Watch a demo",
+      onClick: () => console.log('Watch demo')
+    },
+    secondaryButton: {
+      text: "Take the tour",
+      onClick: () => console.log('Take tour')
+    }
+  };
+
+  // Content Cards - Oracle style articles
+  const contentCards = [
+    {
+      title: "AI agents: How CFOs will automate almost every finance process",
+      description: "See how embedded AI agents power touchless operations so you can boost efficiency, cut costs, and lead with data-driven insights.",
+      actionText: "Read the article",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Read AI agents article')
+    },
+    {
+      title: "The future of ERP: Cloud-native solutions for modern enterprises",
+      description: "Discover how cloud-native ERP solutions are transforming business operations with scalability, flexibility, and real-time insights.",
+      actionText: "Access the whitepaper",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Access whitepaper')
+    },
+    {
+      title: "HCM transformation: Building the workforce of tomorrow",
+      description: "Learn how modern HCM solutions help organizations attract, develop, and retain top talent in today's competitive market.",
+      actionText: "Download guide",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Download guide')
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver comprehensive ERP & HCM results from start to finish",
+      description: "AI Augments ERP & HCM Solutions help you streamline business operations by connecting financial management, supply chain, and human resources in one integrated platform.",
+      image: "", // Will use CSS mockup
+      imageAlt: "ERP Dashboard Overview"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage enterprise operations",
+      description: "Regardless of your organization size, you can easily manage financial processes, supply chain operations, and workforce management with intuitive drag-and-drop functionality.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Enterprise Management Interface"
+    },
+    {
+      id: 3,
+      title: "Optimize workforce and financial performance",
+      description: "The intelligent analytics capability helps you optimize resource allocation, forecast financial performance, and make data-driven decisions across all business functions.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Performance Analytics"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "ERP & HCM Solutions customer successes",
+    description: "A large and growing community of companies is improving business operations across organizations with connected, intelligent ERP and HCM solutions.",
+    logos: [
+      { name: "Global Manufacturing", logo: "", alt: "Global Manufacturing", link: "#" },
+      { name: "Enterprise Solutions", logo: "", alt: "Enterprise Solutions" },
+      { name: "BusinessFlow Corp", logo: "", alt: "BusinessFlow Corp", link: "#" },
+      { name: "Operations Inc", logo: "", alt: "Operations Inc" },
+      { name: "WorkForce Pro", logo: "", alt: "WorkForce Pro", link: "#" },
+      { name: "Enterprise Co", logo: "", alt: "Enterprise Co" },
+      { name: "ProcessMax", logo: "", alt: "ProcessMax" },
+      { name: "Business Masters", logo: "", alt: "Business Masters" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "Gartner highlights AI-powered ERP solutions",
+    quote: "AI-powered ERP systems provide instant business insights and help organizations automate financial processes, optimize supply chains, and manage human resources via intelligent automation. The AI learns from historical data, business patterns, and operational context to optimize enterprise performance.",
+    source: "Gartner Research",
+    actionText: "Read the research",
+    actionLink: "https://www.gartner.com/en/documents/4008681"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "Global Manufacturing streamlined operations and reduced costs by 35%",
+    videoId: "erp-hcm-video-id",
+    thumbnail: "", // Will use CSS mockup
+    duration: "3:45",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Flexible, powerful ERP & HCM solutions",
+    useCases: [
+      {
+        title: "Manufacturing enterprises",
+        description: "Optimize production planning, supply chain management, and workforce scheduling to improve efficiency and reduce operational costs.",
+        actionText: "Watch how Global Manufacturing optimized operations (3:20)",
+        onAction: () => console.log('Watch Global Manufacturing video')
+      },
+      {
+        title: "Service organizations",
+        description: "Streamline project management, resource allocation, and financial reporting to deliver exceptional service while maintaining profitability.",
+        actionText: "See service industry success stories",
+        actionLink: "#"
+      },
+      {
+        title: "Multi-location businesses",
+        description: "Centralize financial management, standardize HR processes, and gain real-time visibility across all locations and business units.",
+        actionText: "Read the multi-location solution brief (PDF)",
+        actionLink: "#"
+      }
+    ]
+  };
+
   // Advanced Features Section Data
   const featureTabs = [
     { id: 'financial-management', title: 'Financial management & accounting' },
@@ -174,12 +296,26 @@ export function ERPHCMLandingPage(props: AppModuleProps) {
       <CompleteAppLanding
         appName="ERP & HCM Solutions"
         hero={heroProps}
+        includeCTABanner={true}
+        includeContentCards={true}
+        includeAdvancedFeatures={true}
+        includeProductTour={true}
+        includeCustomerLogos={true}
+        includeFeaturedArticle={true}
+        includeCustomerVideo={true}
+        includeUseCases={true}
         includeGetStarted={true}
         includeBenefits={true}
         includeCustomerSuccess={true}
         includeRelatedProducts={true}
-        includeAdvancedFeatures={true}
         includeFinalCTA={true}
+        ctaBanner={ctaBanner}
+        contentCards={contentCards}
+        tourSlides={tourSlides}
+        customerLogosData={customerLogosData}
+        featuredArticle={featuredArticle}
+        customerVideo={customerVideo}
+        useCasesData={useCasesData}
         relatedProducts={relatedProducts}
         benefits={benefits}
         customerStory={customerStory}

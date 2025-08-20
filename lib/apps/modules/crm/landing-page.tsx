@@ -137,6 +137,128 @@ export function CRMLandingPage(props: AppModuleProps) {
     "ConvertMax", "Pipeline Co", "RevBoost", "CRM Masters", "Deal Closers"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Exceed client expectations with CRM that delivers results on time and on budget.",
+    primaryButton: {
+      text: "Watch a demo",
+      onClick: () => console.log('Watch demo')
+    },
+    secondaryButton: {
+      text: "Take the tour",
+      onClick: () => console.log('Take tour')
+    }
+  };
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver great CRM results from start to finish",
+      description: "AI Augments CRM & Sales Management helps you keep your sales team engaged by connecting the right leads to the right opportunities, support your organization's goals with a clear view of sales performance, and quickly adapt to changing market requirements.",
+      image: "", // Will use CSS mockup
+      imageAlt: "CRM Dashboard Overview"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage customer relationships",
+      description: "Regardless of your level of experience, you can easily use the high performance drag-and-drop functionality to manage leads, opportunities, and customer interactions in one place.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Lead Management Interface"
+    },
+    {
+      id: 3,
+      title: "Match sales talent to the right opportunities",
+      description: "The innovative search and match capability helps you find the best-fit sales rep for your opportunities by filtering by skills, territory, and performance. Suitable candidates are evaluated and scored automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Sales Team Assignment"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "CRM & Sales Management customer successes",
+    description: "A large and growing community of companies is improving sales performance across organizations with connected, intelligent CRM solutions.",
+    logos: [
+      { name: "TechFlow", logo: "", alt: "TechFlow", link: "#" },
+      { name: "SalesForce Pro", logo: "", alt: "SalesForce Pro" },
+      { name: "GrowthCorp", logo: "", alt: "GrowthCorp", link: "#" },
+      { name: "LeadGen Inc", logo: "", alt: "LeadGen Inc" },
+      { name: "ConvertMax", logo: "", alt: "ConvertMax", link: "#" },
+      { name: "Pipeline Co", logo: "", alt: "Pipeline Co" },
+      { name: "RevBoost", logo: "", alt: "RevBoost" },
+      { name: "CRM Masters", logo: "", alt: "CRM Masters" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "Harvard Business Review highlights AI-powered CRM solutions",
+    quote: "AI-powered CRM systems provide instant customer insights and help sales teams update lead status, track opportunities, and manage customer relationships via intelligent automation. The AI learns from past interactions, customer data, and overall context to tailor sales approaches.",
+    source: "Harvard Business Review",
+    actionText: "Read the article",
+    actionLink: "https://hbr.org/2023/02/how-ai-will-transform-sales"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "TechFlow transformed their sales process and increased revenue by 40%",
+    videoId: "sample-video-id",
+    thumbnail: "", // Will use CSS mockup
+    duration: "2:15",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Flexible, powerful CRM solutions",
+    useCases: [
+      {
+        title: "Sales-driven businesses",
+        description: "Increase speed and improve execution of sales operations while reducing customer acquisition costs.",
+        actionText: "Watch how TechFlow streamlined their sales process (2:18)",
+        onAction: () => console.log('Watch TechFlow video')
+      },
+      {
+        title: "Customer service excellence",
+        description: "Deliver customer service that consistently exceeds expectations while controlling costs and maximizing customer satisfaction.",
+        actionText: "See customer service success stories",
+        actionLink: "#"
+      },
+      {
+        title: "Multi-channel sales",
+        description: "Improve insight, reduce risk, and increase performance with integrated multi-channel sales management.",
+        actionText: "Read the solution brief (PDF)",
+        actionLink: "#"
+      }
+    ]
+  };
+
+  // Content Cards - Oracle style articles
+  const contentCards = [
+    {
+      title: "AI agents: How CFOs will automate almost every finance process",
+      description: "See how embedded AI agents power touchless operations so you can boost efficiency, cut costs, and lead with data-driven insights.",
+      actionText: "Read the article",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Read AI agents article')
+    },
+    {
+      title: "AI-Driven Sales: Capitalizing on an Intelligence Landscape",
+      description: "Watch this on-demand webinar to discover how AI can drive real business outcomes and prepare your organization for the future of sales. Make AI your competitive edge.",
+      actionText: "Access the webinar",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Access webinar')
+    },
+    {
+      title: "Empower sales excellence with AI agents for CRM",
+      description: "Learn how AI agents can empower your organization to improve sales operations, decision-making processes, and overall business performance.",
+      actionText: "Read the guide (PDF)",
+      actionType: 'secondary' as const,
+      onAction: () => console.log('Read guide PDF')
+    }
+  ];
+
   // Advanced Features Section Data
   const featureTabs = [
     { id: 'lead-management', title: 'Lead management and scoring' },
@@ -299,12 +421,26 @@ export function CRMLandingPage(props: AppModuleProps) {
       <CompleteAppLanding
         appName="CRM & Sales Management"
         hero={heroProps}
+        includeCTABanner={true}
+        includeContentCards={true}
+        includeAdvancedFeatures={true}
+        includeProductTour={true}
+        includeCustomerLogos={true}
+        includeFeaturedArticle={true}
+        includeCustomerVideo={true}
+        includeUseCases={true}
         includeGetStarted={true}
         includeBenefits={true}
         includeCustomerSuccess={true}
         includeRelatedProducts={true}
-        includeAdvancedFeatures={true}
         includeFinalCTA={true}
+        ctaBanner={ctaBanner}
+        contentCards={contentCards}
+        tourSlides={tourSlides}
+        customerLogosData={customerLogosData}
+        featuredArticle={featuredArticle}
+        customerVideo={customerVideo}
+        useCasesData={useCasesData}
         relatedProducts={relatedProducts}
         benefits={benefits}
         customerStory={customerStory}

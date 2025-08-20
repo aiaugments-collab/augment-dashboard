@@ -51,7 +51,7 @@ export function SocialProofSection() {
             Trusted by Growing Businesses
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-12">
-            Join thousands of companies that transformed their operations with our AI platform
+            Join thousands of companies that transformed their operations with our AI AUGMENTS
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

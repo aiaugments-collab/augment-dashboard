@@ -84,6 +84,123 @@ export function SocialMediaManagerLandingPage(props: AppModuleProps) {
     onAction: () => console.log('Read customer story')
   };
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Amplify your social media presence with AI-powered management tools",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Multi-Platform Content Management",
+      description: "Create, schedule, and publish content across all major social platforms with unified management and automated optimization for maximum engagement.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "AI-Powered Analytics & Insights",
+      description: "Track performance across platforms with comprehensive analytics that reveal what content drives engagement, conversions, and audience growth.",
+      actionText: "Explore analytics",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Smart Scheduling & Automation",
+      description: "Optimize posting times with AI recommendations and automate content distribution to maintain consistent social media presence.",
+      actionText: "View scheduling",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver exceptional social media results from start to finish",
+      description: "AI Augments Social Media Manager helps you build your social presence by connecting the right content to the right audiences, support your engagement goals with clear performance tracking, and quickly adapt to changing social media trends.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Social Media Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage content across all platforms",
+      description: "Regardless of your social media expertise, you can easily use the unified interface to create, schedule, and publish content across multiple platforms with automated optimization.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Content Management Interface"
+    },
+    {
+      id: 3,
+      title: "Match content strategies to audience preferences",
+      description: "The intelligent content engine helps you create the most engaging posts by analyzing audience behavior, trending topics, and optimal posting times automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Content Optimization Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by social media leaders worldwide",
+    description: "Join thousands of brands that rely on our social media platform",
+    logos: [
+      { name: "SocialBrand", logo: "", alt: "SocialBrand logo" }, // Will use CSS mockup
+      { name: "ContentFlow", logo: "", alt: "ContentFlow logo" },
+      { name: "EngagePro", logo: "", alt: "EngagePro logo" },
+      { name: "SocialMax", logo: "", alt: "SocialMax logo" },
+      { name: "BrandBoost", logo: "", alt: "BrandBoost logo" },
+      { name: "SocialTech", logo: "", alt: "SocialTech logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Social Media: AI-Driven Content Strategy",
+    quote: "Brands using AI-powered social media management see 400% improvement in engagement rates and 300% increase in follower growth through optimized content strategies.",
+    source: "Social Media Marketing Research Institute",
+    image: "",
+    imageAlt: "Social Media Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "SocialBrand increased followers by 300% with AI-powered content strategy",
+    videoId: "social-media-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "3:20",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Social Media Management use cases",
+    useCases: [
+      {
+        title: "Brand Marketing & Awareness",
+        description: "Build brand awareness and engage audiences across social platforms with consistent messaging and optimized content strategies.",
+        actionText: "Explore brand marketing"
+      },
+      {
+        title: "E-commerce Social Selling",
+        description: "Drive sales through social media with product showcases, customer testimonials, and targeted promotional campaigns.",
+        actionText: "View social selling"
+      },
+      {
+        title: "Community Management",
+        description: "Build and nurture online communities with engaging content, responsive customer service, and active audience interaction.",
+        actionText: "Learn about community management"
+      }
+    ]
+  };
+
   const featureTabs = [
     { id: 'content-scheduling', title: 'Content scheduling' },
     { id: 'analytics', title: 'Social analytics' }
@@ -131,6 +248,22 @@ export function SocialMediaManagerLandingPage(props: AppModuleProps) {
       includeCustomerSuccess={true}
       includeAdvancedFeatures={true}
       includeFinalCTA={true}
+      // Oracle-style sections
+      includeCTABanner={true}
+      ctaBanner={ctaBanner}
+      includeContentCards={true}
+      contentCards={contentCards}
+      includeProductTour={true}
+      tourSlides={tourSlides}
+      includeCustomerLogos={true}
+      customerLogosData={customerLogosData}
+      includeFeaturedArticle={true}
+      featuredArticle={featuredArticle}
+      includeCustomerVideo={true}
+      customerVideo={customerVideo}
+      includeUseCases={true}
+      useCasesData={useCasesData}
+      // Existing props
       benefits={benefits}
       customerStory={customerStory}
       advancedFeaturesTitle="AI Augments Social Media Management features"

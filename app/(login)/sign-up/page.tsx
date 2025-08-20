@@ -45,7 +45,7 @@ export default function SignUpPage() {
               {/* Welcome Text */}
               <div className="text-center space-y-2">
                 <h1 className="text-2xl font-bold text-slate-900">Create Account</h1>
-                <p className="text-slate-600">Join our AI platform and get started</p>
+                <p className="text-slate-600">Join our AI AUGMENTS and get started</p>
               </div>
 
               {/* Sign Up Component */}

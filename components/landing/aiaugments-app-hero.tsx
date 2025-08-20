@@ -169,45 +169,7 @@ const AiAugmentsAppHero: React.FC<AppHeroProps> = ({
         </div>
       </div>
 
-      {/* Bottom Image Section */}
-      <div className={`relative ${bottomGradient}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 py-16">
-            {/* Feature showcases */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className={`aspect-video ${featureShowcases.feature1.color} relative`}>
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">{featureShowcases.feature1.label}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className={`aspect-video ${featureShowcases.feature2.color} relative`}>
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">{featureShowcases.feature2.label}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className={`aspect-video ${featureShowcases.feature3.color} relative`}>
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">{featureShowcases.feature3.label}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className={`aspect-video ${featureShowcases.feature4.color} relative`}>
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <div className="text-white font-semibold">{featureShowcases.feature4.label}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </section>
   );
 };

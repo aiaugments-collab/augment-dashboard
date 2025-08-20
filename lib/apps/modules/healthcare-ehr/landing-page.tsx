@@ -137,6 +137,123 @@ export function HealthcareEHRLandingPage(props: AppModuleProps) {
     "CarePlus", "HealthMax Co", "MedBoost", "Clinical Masters", "HealthCare Plus"
   ];
 
+  // CTA Banner - Oracle RC11 style
+  const ctaBanner = {
+    title: "Transform healthcare delivery with AI-powered EHR systems",
+    primaryButton: {
+      text: "Get started",
+      onClick: handleRequestDemo
+    },
+    secondaryButton: {
+      text: "Take a tour",
+      onClick: handleTakeTour
+    }
+  };
+
+  // Content Cards - Oracle RC59 style
+  const contentCards = [
+    {
+      title: "Electronic Health Records & FHIR",
+      description: "Comprehensive EHR system with FHIR R4 compliance, clinical documentation, and seamless interoperability across healthcare networks.",
+      actionText: "Learn more",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Clinical Workflow Optimization",
+      description: "Streamline clinical processes with AI-powered decision support, automated workflows, and integrated care coordination tools.",
+      actionText: "Explore workflows",
+      actionType: 'primary' as const
+    },
+    {
+      title: "Population Health & Analytics",
+      description: "Improve population health outcomes with advanced analytics, risk stratification, and comprehensive reporting capabilities.",
+      actionText: "View analytics",
+      actionType: 'primary' as const
+    }
+  ];
+
+  // Product Tour Slides - Oracle RC118 style
+  const tourSlides = [
+    {
+      id: 1,
+      title: "Deliver exceptional healthcare results from start to finish",
+      description: "AI Augments Healthcare EHR helps you improve patient care by connecting the right clinical tools to the right workflows, support your healthcare goals with clear patient outcome tracking, and quickly adapt to changing healthcare requirements.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Healthcare EHR Dashboard"
+    },
+    {
+      id: 2,
+      title: "Effortlessly manage patient records and workflows",
+      description: "Regardless of your clinical expertise, you can easily use the intuitive EHR interface to manage patient records, clinical documentation, and care coordination with automated workflows.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Clinical Workflow Interface"
+    },
+    {
+      id: 3,
+      title: "Match clinical decisions to patient needs",
+      description: "The intelligent clinical decision support engine helps you provide the best patient care by analyzing clinical data, evidence-based guidelines, and patient-specific factors automatically.",
+      image: "", // Will use CSS mockup
+      imageAlt: "Clinical Decision Support Engine"
+    }
+  ];
+
+  // Customer Logos - Oracle RC56 style
+  const customerLogosData = {
+    title: "Trusted by healthcare organizations worldwide",
+    description: "Join thousands of healthcare providers that rely on our EHR platform",
+    logos: [
+      { name: "Regional Medical", logo: "", alt: "Regional Medical logo" }, // Will use CSS mockup
+      { name: "HealthTech Pro", logo: "", alt: "HealthTech Pro logo" },
+      { name: "ClinicalCorp", logo: "", alt: "ClinicalCorp logo" },
+      { name: "MedFlow Inc", logo: "", alt: "MedFlow Inc logo" },
+      { name: "CarePlus", logo: "", alt: "CarePlus logo" },
+      { name: "HealthMax Co", logo: "", alt: "HealthMax Co logo" }
+    ]
+  };
+
+  // Featured Article - Oracle RC61 style
+  const featuredArticle = {
+    title: "The Future of Healthcare: AI-Enhanced Electronic Health Records",
+    quote: "Healthcare organizations using AI-powered EHR systems see 45% reduction in administrative burden and 30% improvement in clinical efficiency through automated workflows and decision support.",
+    source: "Healthcare Technology Research Institute",
+    image: "",
+    imageAlt: "Healthcare Research",
+    actionText: "Read the full report",
+    actionType: 'primary' as const,
+    actionLink: "#article"
+  };
+
+  // Customer Video - Oracle RC10 style
+  const customerVideo = {
+    title: "Regional Medical Center reduced administrative burden by 45% with AI-powered EHR workflows",
+    videoId: "healthcare-success-story",
+    thumbnail: "", // Will use CSS mockup
+    duration: "4:30",
+    onPlayVideo: (videoId: string) => console.log('Play video:', videoId)
+  };
+
+  // Use Cases - Oracle RC36 style
+  const useCasesData = {
+    title: "Healthcare EHR use cases",
+    useCases: [
+      {
+        title: "Hospital & Health Systems",
+        description: "Comprehensive EHR solution for hospitals with integrated clinical workflows, patient management, and regulatory compliance capabilities.",
+        actionText: "Explore hospital solutions"
+      },
+      {
+        title: "Ambulatory Care & Clinics",
+        description: "Streamlined EHR for outpatient care with appointment scheduling, clinical documentation, and practice management integration.",
+        actionText: "View ambulatory care"
+      },
+      {
+        title: "Specialty Care Practices",
+        description: "Specialized EHR features for cardiology, oncology, orthopedics, and other specialty practices with tailored workflows and templates.",
+        actionText: "Learn about specialty care"
+      }
+    ]
+  };
+
   // Advanced Features Section Data
   const featureTabs = [
     { id: 'patient-records', title: 'Patient records management' },
@@ -305,6 +422,22 @@ export function HealthcareEHRLandingPage(props: AppModuleProps) {
         includeRelatedProducts={true}
         includeAdvancedFeatures={true}
         includeFinalCTA={true}
+        // Oracle-style sections
+        includeCTABanner={true}
+        ctaBanner={ctaBanner}
+        includeContentCards={true}
+        contentCards={contentCards}
+        includeProductTour={true}
+        tourSlides={tourSlides}
+        includeCustomerLogos={true}
+        customerLogosData={customerLogosData}
+        includeFeaturedArticle={true}
+        featuredArticle={featuredArticle}
+        includeCustomerVideo={true}
+        customerVideo={customerVideo}
+        includeUseCases={true}
+        useCasesData={useCasesData}
+        // Existing props
         relatedProducts={relatedProducts}
         benefits={benefits}
         customerStory={customerStory}
